@@ -2,6 +2,7 @@ import { TreeViewElement } from "@/components/ui/tree-view-api";
 import { create } from "zustand";
 
 interface CodespaceStore {
+  currentFileContent: string | undefined;
   homeFolderPath: string;
   files: TreeViewElement[];
   openedFiles: TreeViewElement[];
@@ -9,6 +10,7 @@ interface CodespaceStore {
   selectedFolderPath: string | null;
   filesChanged: boolean;
 
+  setCurrentFileContent: (currentFileContent: string | undefined) => void;
   setFolderPath: (homeFolderPath: string) => void;
   setFiles: (files: TreeViewElement[]) => void;
   appendOpenFiles: (file: TreeViewElement) => void;
@@ -19,6 +21,7 @@ interface CodespaceStore {
 }
 
 export const useCodespaceStore = create<CodespaceStore>((set) => ({
+  currentFileContent: "",
   homeFolderPath: "./repos/test",
   files: [],
   openedFiles: [],
@@ -26,6 +29,7 @@ export const useCodespaceStore = create<CodespaceStore>((set) => ({
   selectedFolderPath: null,
   filesChanged: false,
 
+  setCurrentFileContent: (currentFileContent) => set({ currentFileContent }),
   setFolderPath: (homeFolderPath) => set({ homeFolderPath }),
   setFiles: (files) => set({ files }),
   appendOpenFiles: (file) =>

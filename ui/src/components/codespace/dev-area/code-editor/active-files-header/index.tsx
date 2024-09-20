@@ -13,7 +13,7 @@ const ActiveFilesHeader = (props: ActiveFilesHeaderProps) => {
   }, [openedFiles]);
 
   return (
-    <div className="w-full h-10 border-b flex flex-row items-center overflow-x-auto">
+    <div className="w-[75%] h-10 border-b flex flex-row flex-wrap items-center overflow-x-scroll">
       {openedFiles.map((file) => (
         <FileTab
           setActiveFileContent={props.setFileContent}

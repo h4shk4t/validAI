@@ -13,11 +13,10 @@ import { useCodespaceStore } from "@/lib/stores/codespace-store";
 import { useDebounce } from "@/lib/hooks/useDebounce";
 
 const CodeEditor = () => {
-  const [fileContent, setFileContent] = useState<string | undefined>("");
   const theme = JSON.parse(JSON.stringify(darcula));
-  const { selectedFile } = useCodespaceStore();
+  const { selectedFile, currentFileContent, setCurrentFileContent } = useCodespaceStore();
 
-  const debouncedFileContent = useDebounce(fileContent, 500);
+  const debouncedFileContent = useDebounce(currentFileContent, 500);
   useEffect(() => {
     async function saveContent() {
       if (debouncedFileContent && selectedFile) {
@@ -32,7 +31,7 @@ const CodeEditor = () => {
       const content = selectedFile
         ? await getFileContent(selectedFile.path)
         : "";
-      setFileContent(content);
+      setCurrentFileContent(content);
     }
     fetchContent();
   }, [selectedFile]);
@@ -40,13 +39,13 @@ const CodeEditor = () => {
   return (
     <ResizablePanelGroup direction="vertical" className="w-full border-b">
       <ResizablePanel defaultSize={75}>
-        <ActiveFilesHeader setFileContent={setFileContent} />
+        <ActiveFilesHeader setFileContent={setCurrentFileContent} />
         <Editor
-          value={fileContent}
+          value={currentFileContent}
           language="solidity"
           width={"100%"}
           height={"100%"}
-          onChange={(fileContent) => setFileContent(fileContent)}
+          onChange={(fileContent) => setCurrentFileContent(fileContent)}
           theme="darcula"
           beforeMount={(monaco) => {
             monaco.editor.defineTheme("darcula", theme);

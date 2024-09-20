@@ -16,19 +16,19 @@ const FileTab = ({
   const { setSelectedFile, removeOpenFile } = useCodespaceStore();
   return (
     <button
-      className={`text-sm h-full w-32 border-r inline-flex items-center px-2 justify-between ${
+      className={`text-sm h-full w-36 border-r inline-flex items-center px-2 justify-between ${
         isActive && "bg-[#282A36]"
       }`}
       onClick={() => setSelectedFile(file)}
     >
-      <div className="inline-flex gap-1">
+      <div className="inline-flex gap-1 overflow-x-auto">
         <img
           src={getMaterialFileIcon(`${file.name}`)}
           width={16}
           height={16}
           alt={file.name}
         />
-        {file.name}
+        <span className="text-sm">{file.name}</span>
       </div>
       {isActive ? (
         <X
