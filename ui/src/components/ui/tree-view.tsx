@@ -99,7 +99,9 @@ export const TreeItem = forwardRef<
     indicator?: boolean;
   } & React.HTMLAttributes<HTMLUListElement>
 >(({ className, elements, indicator, ...props }, ref) => {
-  const { setSelectedFile, setSelectedFolderPath } = useCodespaceStore();
+  const { setSelectedFile, setSelectedFolderPath, appendOpenFiles } =
+    useCodespaceStore();
+
   return (
     <ul ref={ref} className="w-full space-y-1 " {...props}>
       {elements &&
@@ -112,7 +114,7 @@ export const TreeItem = forwardRef<
                 isSelectable={element.isSelectable}
                 className="px-1 "
                 onFocus={() => {
-                  setSelectedFolderPath(element.path || "");
+                  setSelectedFolderPath(element.path);
                 }}
               >
                 <TreeItem
@@ -130,7 +132,7 @@ export const TreeItem = forwardRef<
                 isSelectable={element.isSelectable}
                 onFocus={() => {
                   setSelectedFile(element);
-                  console.log(element);
+                  appendOpenFiles(element);
                 }}
                 fileIcon={
                   <img

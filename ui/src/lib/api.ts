@@ -28,6 +28,22 @@ export const createFile = async (filePath: string) => {
   return res.data;
 };
 
+export const saveFile = async (filePath: string, content: string) => {
+  const res = await axios.post(
+    `${backend}/update-file`,
+    {
+      file_path: filePath,
+      value: content,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res.data;
+}
+
 export const deleteFile = async (filePath: string) => {
   const res = await axios.delete(
     `${backend}/delete-file?file_path=${filePath}`

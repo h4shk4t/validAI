@@ -8,20 +8,31 @@ import { Editor } from "@monaco-editor/react";
 import { useEffect, useState } from "react";
 import darcula from "./darcula.json";
 import SecondaryPanel from "./secondary-panel";
-import { getFileContent } from "@/lib/api";
+import { getFileContent, saveFile } from "@/lib/api";
 import { useCodespaceStore } from "@/lib/stores/codespace-store";
+import { useDebounce } from "@/lib/hooks/useDebounce";
 
 const CodeEditor = () => {
-  const [value, setValue] = useState<string | undefined>("");
+  const [fileContent, setFileContent] = useState<string | undefined>("");
   const theme = JSON.parse(JSON.stringify(darcula));
   const { selectedFile } = useCodespaceStore();
+
+  const debouncedFileContent = useDebounce(fileContent, 500);
+  useEffect(() => {
+    async function saveContent() {
+      if (debouncedFileContent && selectedFile) {
+        await saveFile(selectedFile.path, debouncedFileContent); // Perform API call here
+      }
+    }
+    saveContent();
+  }, [debouncedFileContent]);
 
   useEffect(() => {
     async function fetchContent() {
       const content = selectedFile
         ? await getFileContent(selectedFile.path)
         : "";
-      setValue(content);
+      setFileContent(content);
     }
     fetchContent();
   }, [selectedFile]);
@@ -29,13 +40,13 @@ const CodeEditor = () => {
   return (
     <ResizablePanelGroup direction="vertical" className="w-full border-b">
       <ResizablePanel defaultSize={75}>
-        <ActiveFilesHeader />
+        <ActiveFilesHeader setFileContent={setFileContent} />
         <Editor
-          value={value}
+          value={fileContent}
           language="solidity"
           width={"100%"}
           height={"100%"}
-          onChange={(value) => setValue(value)}
+          onChange={(fileContent) => setFileContent(fileContent)}
           theme="darcula"
           beforeMount={(monaco) => {
             monaco.editor.defineTheme("darcula", theme);
