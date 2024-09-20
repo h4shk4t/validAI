@@ -44,13 +44,14 @@ const Terminal = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="flex-1 text-sm font-mono px-2">{output}</div>
+      <div className="flex-1 text-sm font-mono px-2 whitespace-pre overflow-auto max-h-[9.6rem]">{output}</div>
       <div className="flex flex-row gap-2 w-full border-t py-1 bg-muted">
         <ChevronRight className="w-4" />
         <form className="flex-1 " onSubmit={handleSubmit}>
           <input
             type="text"
             value={command}
+            placeholder="Enter command..."
             onChange={(e) => setCommand(e.target.value)}
             className="w-full outline-none font-mono text-sm bg-muted"
           />

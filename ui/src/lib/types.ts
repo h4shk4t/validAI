@@ -3,3 +3,5 @@ export interface Feature {
   icon: React.ReactNode;
   component: React.ReactNode;
 }
+
+export type SelectDocs
