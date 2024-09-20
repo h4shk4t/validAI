@@ -1,1 +1,4 @@
 venv/
+.env
+# index_store/
+*_dist/
