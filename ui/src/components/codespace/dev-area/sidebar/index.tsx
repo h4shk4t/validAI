@@ -4,16 +4,11 @@ import CodespaceSettings from "./features/codespace-settings";
 import FileTree from "./features/file-tree";
 import Header from "./header";
 import { useState } from "react";
-
-interface feature {
-  label: string;
-  icon: React.ReactNode;
-  component: React.ReactNode;
-}
+import { Feature } from "@/lib/types";
 
 const SideBar = () => {
   const iconClass = "w-5";
-  const features: feature[] = [
+  const features: Feature[] = [
     {
       label: "Files",
       icon: <Folder className={iconClass} />,
