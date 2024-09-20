@@ -1,6 +1,6 @@
 import { Feature } from "@/lib/types";
 import { Bot, Bug, TerminalIcon } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import Terminal from "./features/terminal";
 import Audit from "./features/audit";
 import Chat from "./features/chat";
@@ -15,14 +15,14 @@ const SecondaryPanel = () => {
       component: <Terminal />,
     },
     {
-      label: "Audit",
-      icon: <Bug className={iconClass} />,
-      component: <Audit />,
-    },
-    {
       label: "Chat",
       icon: <Bot className={iconClass} />,
       component: <Chat />,
+    },
+    {
+      label: "Audit",
+      icon: <Bug className={iconClass} />,
+      component: <Audit />,
     },
   ];
 
