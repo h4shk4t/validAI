@@ -36,7 +36,7 @@ const SideBar = () => {
   return (
     <div className="h-full flex flex-col" id="over">
       <Header />
-      <div className="border-b flex-1 flex flex-row">
+      <div className="flex-1 flex flex-row">
         <div className="flex flex-col h-full w-12 border-r">
           {features.map((feature, index) => (
             <div
