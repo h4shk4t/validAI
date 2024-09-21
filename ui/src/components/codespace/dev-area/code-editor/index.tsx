@@ -38,7 +38,7 @@ const CodeEditor = () => {
 
   return (
     <ResizablePanelGroup direction="vertical" className="w-full border-b">
-      <ResizablePanel defaultSize={75}>
+      <ResizablePanel defaultSize={70}>
         <ActiveFilesHeader setFileContent={setCurrentFileContent} />
         <Editor
           value={currentFileContent}
@@ -56,7 +56,7 @@ const CodeEditor = () => {
         />
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel defaultSize={25}>
+      <ResizablePanel defaultSize={30}>
         <SecondaryPanel />
       </ResizablePanel>
     </ResizablePanelGroup>

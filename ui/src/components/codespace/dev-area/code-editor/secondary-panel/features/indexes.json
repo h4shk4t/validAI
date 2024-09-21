@@ -1,14 +1,14 @@
 {
   "1": {
     "icon": "https://example.pmg",
-    "name": "phala"
+    "name": "Phala"
   },
   "2": {
     "icon": "https://example.pmg",
-    "name": "nethermind"
+    "name": "Nethermind"
   },
   "3": {
     "icon": "https://example.pmg",
-    "name": "near protocol"
+    "name": "Near protocol"
   }
 }

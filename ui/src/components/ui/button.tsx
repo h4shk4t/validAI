@@ -32,7 +32,7 @@ const buttonVariants = cva(
         linkHover2:
           "relative after:absolute after:bg-secondary after:bottom-1 after:h-[1px] after:w-2/3 after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300",
         active:
-          "relative after:absolute after:bg-secondary after:bottom-1 after:h-[1px] after:w-2/3 after:origin-bottom-left hover:after:origin-bottom-right"
+          "relative text-primary-foreground after:absolute after:bg-secondary after:bottom-1 after:h-[1px] after:w-2/3 after:origin-bottom-left hover:after:origin-bottom-right"
       },
       size: {
         default: "h-10 px-4 py-2",

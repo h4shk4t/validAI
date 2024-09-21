@@ -22,7 +22,7 @@ const FileTree = () => {
   }, [filesChanged]);
 
   return (
-    <Tree className="w-full bg-background rounded-md" indicator={true}>
+    <Tree className="w-full bg-card rounded-md" indicator={true}>
       <div className="w-full p-2">
         {files.map((element: TreeViewElement, _) => (
           <TreeItem key={element.id} elements={[element]} />
