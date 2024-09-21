@@ -1,0 +1,6 @@
+faiss-cpu==1.8.0
+llama-index-vector-stores-faiss==0.2.1
+llama-index-retrievers-bm25==0.3.0
+llama-index==0.11.10 
+llama-index-embeddings-openai==0.2.5
+argparse==1.4.0
