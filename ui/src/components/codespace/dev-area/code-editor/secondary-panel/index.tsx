@@ -1,10 +1,11 @@
 import { Feature } from "@/lib/types";
-import { Bot, Bug, TerminalIcon } from "lucide-react";
+import { Bot, Bug, Flower, TerminalIcon } from "lucide-react";
 import { useState } from "react";
 import Terminal from "./features/terminal";
 import Audit from "./features/audit";
 import Chat from "./features/chat";
 import { Button } from "@/components/ui/button";
+import AIAgentFlowDiagram from "./features/agent-flow-diagram";
 
 const SecondaryPanel = () => {
   const iconClass = "w-4";
@@ -24,6 +25,11 @@ const SecondaryPanel = () => {
       icon: <Bug className={iconClass} />,
       component: <Audit />,
     },
+    {
+      label: "Agent flow",
+      icon: <Flower className={iconClass} />,
+      component: <AIAgentFlowDiagram />
+    }
   ];
 
   const [activeFeatureIndex, setActiveFeatureIndex] = useState<number>(0);

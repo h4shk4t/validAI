@@ -9,7 +9,11 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { Check, Github, MoveRight } from "lucide-react";
-import { DynamicWidget, useIsLoggedIn } from "@dynamic-labs/sdk-react-core";
+import {
+  DynamicWidget,
+  useDynamicContext,
+  useIsLoggedIn,
+} from "@dynamic-labs/sdk-react-core";
 import { useNavigate } from "react-router-dom";
 import useTokenStore from "@/lib/stores/token";
 
@@ -18,7 +22,7 @@ const LoginModal = () => {
   const accessToken = useTokenStore((s) => s.token);
   console.log("accessToken while opening login modal", accessToken);
   const isGithubLoggedIn = !!accessToken;
-
+  const { setShowAuthFlow } = useDynamicContext();
   const navigate = useNavigate();
 
   return (
@@ -60,14 +64,17 @@ const LoginModal = () => {
               src="/hexagon.png"
               alt="3D Hexagon"
               className="w-30 h-28 animate-spin-slow relative z-10"
-              style={{ animation: 'spin 10s linear infinite' }}
+              style={{ animation: "spin 10s linear infinite" }}
             />
           </div>
         </div>
         <div className="flex flex-col space-y-4">
           {isGithubLoggedIn ? (
             <p className="inline-flex items-center justify-center gap-2 w-full">
-              <span className="text-green-500">Github logged in</span> 🎉
+              <span className="text-emerald-500 font-medium">
+                Github logged in
+              </span>{" "}
+              🎉
             </p>
           ) : (
             <Button
@@ -77,10 +84,15 @@ const LoginModal = () => {
               }
               className="bg-[#0D152D] border-[#243A64] border"
             >
-              Login with <Github className="w-4 h-4 ml-2" />
+              Login with Github <Github className="w-4 h-4 ml-2" />
             </Button>
           )}
-          <DynamicWidget />
+          <Button
+            className="bg-[#0D152D] border-[#243A64] border"
+            onClick={() => setShowAuthFlow(true)}
+          >
+            Login with Dynamic <Check className="w-4 h-4 ml-2" />
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
