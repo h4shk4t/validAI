@@ -16,6 +16,7 @@ import useTokenStore from "@/lib/stores/token";
 const LoginModal = () => {
   const isDynamicLoggedIn = useIsLoggedIn();
   const accessToken = useTokenStore((s) => s.token);
+  console.log("accessToken while opening login modal", accessToken);
   const isGithubLoggedIn = !!accessToken;
 
   const navigate = useNavigate();

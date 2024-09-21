@@ -38,7 +38,7 @@ const Chat = () => {
 
   const [loading, setLoading] = useState(false); // State for loading
   const [fileContent, setFileContent] = useState<string>(""); // State for file content
-
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(query);
@@ -77,7 +77,7 @@ const Chat = () => {
                 <Dialog key={file.name}>
                   <DialogTrigger asChild>
                     <div
-                      className="text-sm tracking-tight bg-background border hover:bg-secondary-foreground hover:cursor-pointer px-2 py-1 inline-flex items-center"
+                      className="text-sm tracking-tight bg-background rounded-md border hover:bg-secondary-foreground hover:cursor-pointer px-2 py-1 inline-flex items-center"
                       onClick={() => fetchFileContent(file.path)} // Fetch file content on click
                     >
                       <File className="w-4 mr-2" />
@@ -88,12 +88,13 @@ const Chat = () => {
                     <DialogHeader>
                       <DialogTitle>{file.name}</DialogTitle>
                     </DialogHeader>
-                    <div className="h-64 overflow-y-scroll">
+                    <div className="h-80 overflow-y-scroll">
                       {loading ? (
                         <div>Loading file content...</div> // Show loading state
                       ) : (
-                        <Markdown className="text-sm font-mono whitespace-pre">
+                        <Markdown className="text-sm font-mono whitespace-pre-wrap">
                           {fileContent}
+                          {/* {sampleContent} */}
                         </Markdown>
                       )}
                     </div>
