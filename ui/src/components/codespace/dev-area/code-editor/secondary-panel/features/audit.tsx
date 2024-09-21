@@ -1,9 +1,28 @@
-import React from 'react'
+import { useState, useEffect } from "react";
+import ContractAnalysis from "@/components/agents/contractAnalysis";
+import { useCodespaceStore } from "@/lib/stores/codespace-store";
 
 const Audit = () => {
-  return (
-    <div>Audit</div>
-  )
-}
+  const { currentFileContent } = useCodespaceStore();
+  const [fileContent, setFileContent] = useState<string | null>(null);
 
-export default Audit
+  useEffect(() => {
+    const fetchFileContent = async () => {
+      setFileContent(currentFileContent);
+    };
+
+    if (currentFileContent) {
+      fetchFileContent();
+    }
+  }, [currentFileContent]);
+
+  return (
+    <div>
+      {fileContent && (
+        <ContractAnalysis code={fileContent} onClose={() => {}} />
+      )}
+    </div>
+  );
+};
+
+export default Audit;
