@@ -1,5 +1,8 @@
 FROM python:3.11-slim-buster
 
+# Update package list and install Git
+RUN apt-get update && apt-get install -y git
+
 COPY requirements.txt ./
 
 COPY .env ./app/
