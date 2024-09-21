@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from eth_account import Account
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from web3 import Web3
 from web3.auto import w3
 from llama_index.embeddings.openai import OpenAIEmbedding
@@ -113,6 +113,33 @@ def process_request():
 
         asyncio.run(main(file_id, model_name))
         return jsonify({"status": "Processing started"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+@app.router('/rag', methods=['POST'])
+def rag_request():
+    try:
+        data = request.get_json()
+        file_id = data.get('file_id')
+        model_name = data.get('model_name')
+        if not file_id or not model_name:
+            return jsonify({"error": "Missing fileID or model_name"}), 400
+        
+        asyncio.run(main(file_id, model_name))
+        return jsonify({"status": "Processing started"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.router('/add_docs', methods=['POST'])
+def add_docs():
+    try:
+        data = request.get_json()
+        link = data.get('link')
+        if not link:
+            return jsonify({"error": "Missing link"}), 400
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
