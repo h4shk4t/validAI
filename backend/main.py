@@ -1,16 +1,21 @@
 from flask import Flask, request, jsonify
 import os
 from flask_cors import CORS
+import tempfile
 import subprocess
 import requests
 from dotenv import load_dotenv
+import requests
+from rag import search
+from upload import upload
 
 load_dotenv()
 
 app = Flask(__name__)
-PORT=8000
+PORT = 8000
 id_counter = 0
-CORS(app, resources={r"*": {"origins": "*"}}) 
+CORS(app, resources={r"*": {"origins": "*"}})
+
 
 def generate_tree(directory):
     global id_counter
@@ -106,7 +111,7 @@ def create_folder():
         return jsonify({"message": "Folder created successfully"}), 200
     except FileExistsError:
         return jsonify({"error": "folder already exists"}), 409
-    
+
 
 @app.route("/create-file", methods=["POST"])
 def create_file():
@@ -150,6 +155,7 @@ def run_command():
     else:
         return jsonify({"output": result.stderr}), 400
 
+
 @app.route("/token", methods=["POST"])
 def get_token():
     data = request.get_json()
@@ -164,8 +170,53 @@ def get_token():
         headers={"Accept": "application/json"},
     )
     access_token = response.json()["access_token"]
-    
+
     return jsonify({"access_token": access_token}), 200
+
+
+@app.route("/rag", methods=["POST"])
+def rag_request():
+    try:
+        data = request.get_json()
+        query = data.get("query")
+        print(f"Query: {query}")
+        if not query:
+            return jsonify({"error": "Missing query"}), 400
+
+        contexts = search(query)
+        print(f"Number of contexts: {len(contexts)}")
+        files = set(context["file_path"] for context in contexts)
+        print(f"Number of unique files: {len(files)}")
+    
+        # get these file contents and store them in a json like 'file_path.split('/')[-1]': content
+        file_contents = {}
+        for file in files:
+            with open(file, "r", encoding="utf-8") as f:
+                # Read the entire content of the file, preserving whitespace and formatting
+                file_contents[file.split("/")[-1]] = f.read()
+
+        llm_context = ""
+        for context in contexts:
+            llm_context = llm_context + context["text"] + "\n"
+
+        prompt = f"""
+        You are a knowledgeable assistant. Your task is to answer the user's query by primarily using the provided context. If the context does not contain sufficient information, you may use your general knowledge to provide a relevant answer, but avoid any assumptions or inaccuracies.
+
+            **Context:**
+            {llm_context}
+
+            **User Query:**
+            {query}
+
+            Please provide a clear and concise answer to the user's query. If you use information from your own knowledge, make it clear and ensure it is accurate. RETURN THE ANSWER IN MARKDOWN FORMAT SO THAT IT CAN BE RENDERED PROPERLY.
+        """
+        hash = upload(prompt)
+        print(f"Hash: {hash}")
+        return jsonify({"hash": hash, "file_contents": file_contents}), 200
+                
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
