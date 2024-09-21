@@ -1,25 +1,45 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from groq import Groq
+from lighthouseweb3 import Lighthouse
 
 import requests
 import json
 import uvicorn
 import os
+import io
+
+# Replace "YOUR_API_TOKEN" with your actual Lighthouse API token
+load_dotenv()
+token = os.getenv("LIGHTHOUSE_KEY")
+lh = Lighthouse(token)
 
 load_dotenv()
 client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
 
+def call_lighthouse_api(fileID):
+    try:
+        file_cid = fileID
+        destination_path = "./downloaded_file.txt"
+
+        file_info = lh.download(file_cid) # The file_info is a tuple containing the file content and its metadata
+
+        file_content = file_info[0].decode("utf-8")
+        return file_content
+    except:
+        return file_content
+
 async def call_groq_api(params):
     file_id = params[0]
     model_name = params[1]
+    prompt = call_lighthouse_api(file_id)
     chat_completion = client.chat.completions.create(
         messages=[
             {
                 "role": "user",
-                "content": "How to check if my solidity contract is safe?",
+                "content": prompt,
             }
         ],
         model=model_name,
