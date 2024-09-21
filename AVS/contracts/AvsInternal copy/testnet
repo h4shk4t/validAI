@@ -1,0 +1,5 @@
+export RPC_URL=https://goerli.infura.io/v3/YOUR_PROJECT_ID
+export PRIVATE_KEY=YOUR_PRIVATE_KEY
+
+source .env
+forge script script/DeployMyFirstContract.s.sol --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast
