@@ -1,10 +1,12 @@
-import { motion } from 'framer-motion';
-import React from 'react';
+import { motion } from "framer-motion";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import DotPattern from "@/components/magicui/dot-pattern";
 import { cn } from "@/lib/utils";
 import BlurIn from "@/components/magicui/blur-in";
-import AnimatedImage from '@/components/AnimatedImage';
+import AnimatedImage from "@/components/AnimatedImage";
+import { useNavigate } from "react-router-dom";
+import LoginModal from "@/components/onboard/login-modal";
 
 const MotionDiv = motion.div;
 
@@ -31,24 +33,16 @@ const itemVariants = {
 };
 
 export default function HomePage() {
+  const navigate = useNavigate();
   return (
     <main>
-      <div>
-      <Button onClick={() => navigate("/code")}>Go to editor</Button>
-      <Button
-        onClick={() =>
-          (window.location.href =
-            "https://github.com/login/oauth/authorize?client_id=Ov23liRv0ktKpaw29Jfw&scope=repo,user")
-        }
-      >
-        Sign in with GitHub
-      </Button>
-    </div>
       <div className="z-0 relative min-h-screen w-full pb-40 overflow-hidden bg-[radial-gradient(97.14%_56.45%_at_51.63%_0%,_#7D56F4_0%,_#4517D7_30%,_#000_100%)]">
-        <DotPattern className={cn(
-          "[mask-image:radial-gradient(50vw_circle_at_center,white,transparent)]",
-        )} />
-        <MotionDiv 
+        <DotPattern
+          className={cn(
+            "[mask-image:radial-gradient(50vw_circle_at_center,white,transparent)]"
+          )}
+        />
+        <MotionDiv
           className="relative z-10 flex flex-col items-center justify-start min-h-screen space-y-6 px-4 pt-32"
           variants={containerVariants}
           initial="hidden"
@@ -62,17 +56,19 @@ export default function HomePage() {
             />
           </motion.div>
 
-          <motion.h2 
+          <motion.h2
             className="text-xl text-white text-opacity-60 tracking-normal text-center max-w-2xl mx-auto z-10"
             variants={itemVariants}
           >
-            Develop, audit, and deploy smart contracts with ease. Access AI-powered tools and a thriving marketplace for Web3 developers.
+            Develop, audit, and deploy smart contracts with ease. Access
+            AI-powered tools and a thriving marketplace for Web3 developers.
           </motion.h2>
 
           <motion.div variants={itemVariants} className="z-20">
-            <Button size="lg" className="shadow-2xl mb-10">
-              Launch IDE
-            </Button>
+            {/* <Button size="lg" className="shadow-2xl mb-10">
+              Login
+            </Button> */}
+            <LoginModal />
           </motion.div>
 
           <motion.div variants={itemVariants}>
@@ -80,14 +76,23 @@ export default function HomePage() {
               src="/shot.png"
               alt="Web3 IDE Screenshot"
               width={1200}
-
               height={900}
               className="w-full h-auto max-w-6xl mx-auto rounded-2xl shadow-lg"
             />
           </motion.div>
         </MotionDiv>
+        <div>
+          <Button onClick={() => navigate("/code")}>Go to editor</Button>
+          <Button
+            onClick={() =>
+              (window.location.href =
+                "https://github.com/login/oauth/authorize?client_id=Ov23liRv0ktKpaw29Jfw&scope=repo,user")
+            }
+          >
+            Sign in with GitHub
+          </Button>
+        </div>
       </div>
-      
     </main>
   );
 }

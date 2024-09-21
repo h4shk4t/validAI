@@ -12,7 +12,7 @@ const Callback = () => {
   const code = urlParams.get("code");
   const setToken = useTokenStore((s) => s.setToken);
   const token = useTokenStore((s) => s.token);
-  console.log("token", token);
+
   useEffect(() => {
     const fetchAccessToken = async () => {
       if (code) {
@@ -22,8 +22,9 @@ const Callback = () => {
           });
           const accessToken = response?.data?.access_token;
           if (accessToken) {
+            console.log("accessToken", accessToken);
             setToken(accessToken);
-            navigate("/dynamic");
+            navigate("/");
           }
         } catch (error) {
           console.error(error);
@@ -35,7 +36,7 @@ const Callback = () => {
   }, [code, navigate, setToken]);
   return (
     <div>
-      <Button onClick={() => navigate("/dashboard")}>Go to dashboard</Button>
+      <Button onClick={() => navigate("/repos")}>Go to dashboard</Button>
     </div>
   );
 };

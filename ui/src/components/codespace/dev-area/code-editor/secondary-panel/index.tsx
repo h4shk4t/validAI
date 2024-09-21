@@ -45,7 +45,7 @@ const SecondaryPanel = () => {
           ))}
         </div>
       </div>
-      <div className="w-full flex-1">
+      <div className="w-full flex-1 border">
         {features[activeFeatureIndex].component}
       </div>
     </div>

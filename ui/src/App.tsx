@@ -9,6 +9,7 @@ import Dynamic from "./pages/dyanmic";
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 
+
 function App() {
   return (
     <DynamicContextProvider
