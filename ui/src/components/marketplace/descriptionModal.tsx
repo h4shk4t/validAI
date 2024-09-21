@@ -13,6 +13,7 @@ interface DescriptionModalProps {
     downloads: number;
     comments: number;
     rating: number;
+    lastUpdated: Date;
   };
 }
 
@@ -23,7 +24,7 @@ const DescriptionModal: React.FC<DescriptionModalProps> = ({ isOpen, onClose, mo
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-[#040B1B] rounded-lg p-6 w-full z-50 max-w-5xl text-white flex flex-col h-[90vh]">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold">Get the model</h2>
+          <h2 className="text-2xl font-semibold">Support the model</h2>
 
           <button onClick={onClose} className="text-gray-400 hover:text-white">
             <FiX size={24} />
@@ -90,7 +91,7 @@ const DescriptionModal: React.FC<DescriptionModalProps> = ({ isOpen, onClose, mo
           <div className="flex justify-between items-center">
             <span className="text-xl font-bold">{model.price} ETH</span>
             <button className="bg-[#59A4E5] text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors">
-              Buy
+              Subscribe
             </button>
           </div>
         </div>
