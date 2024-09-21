@@ -49,11 +49,10 @@ export default function HomePage() {
           initial="hidden"
           animate="visible"
         >
-           <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants}>
             <div className="bg-slate-900 bg-opacity-10 border-white border border-opacity-30 backdrop-blur-sm border-1 backdrop-filter backdrop-blur-lg rounded-3xl px-6 py-2">
               <BlurIn
                 word="Introduction to the future"
-
                 className="font-display text-center !text-sm font-normal text-white w-full lg:w-auto max-w-4xl mx-auto z-10"
                 duration={1}
               />
@@ -71,8 +70,8 @@ export default function HomePage() {
             className="text-xl text-white text-opacity-60 tracking-normal text-center max-w-2xl mx-auto z-10"
             variants={itemVariants}
           >
-            AI-powered code auditing and decentralised marketplace. 
-            Using AVS for validation and inference.
+            AI-powered code auditing and decentralised marketplace. Using AVS
+            for validation and inference.
           </motion.h2>
 
 

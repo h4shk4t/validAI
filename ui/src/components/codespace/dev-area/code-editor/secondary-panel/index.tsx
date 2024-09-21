@@ -30,14 +30,14 @@ const SecondaryPanel = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="w-full h-10">
+      <div className="w-full h-10 bg-card">
         <div className="flex flex-row gap-2">
           {features.map((feature, index) => (
             <Button
               size={"sm"}
               key={index}
               variant={activeFeatureIndex === index ? "active" : "linkHover2"}
-              className="text-xs flex flex-row items-center gap-1"
+              className="text-xs flex flex-row items-center gap-1 tracking-tight"
               onClick={() => setActiveFeatureIndex(index)}
             >
               {feature.icon} {feature.label}
@@ -45,7 +45,7 @@ const SecondaryPanel = () => {
           ))}
         </div>
       </div>
-      <div className="w-full flex-1 border">
+      <div className="w-full flex-1 border-t relative overflow-y-scroll">
         {features[activeFeatureIndex].component}
       </div>
     </div>

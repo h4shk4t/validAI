@@ -51,7 +51,7 @@ const SideBar = () => {
             </div>
           ))}
         </div>
-        <div className="flex-1">{features[activeFeatureIndex].component}</div>
+        <div className="flex-1 bg-card">{features[activeFeatureIndex].component}</div>
       </div>
     </div>
   );

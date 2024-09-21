@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
-import { Loader2, ChevronRight } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Markdown from 'react-markdown'
 
 interface ContractAnalysisProps {
   code: string;
@@ -47,27 +47,19 @@ const ContractAnalysis: React.FC<ContractAnalysisProps> = ({ code, onClose }) =>
   };
 
   return (
-    <Card className="h-full overflow-auto relative">
-      <Button
-        onClick={onClose}
-        className="absolute top-2 right-2 p-2"
-        variant="ghost"
-        size="icon"
-      >
-        <ChevronRight className="h-8 w-8" />
-      </Button>
+    <Card className="border-none bg-background">
       <CardHeader>
         <CardTitle>Contract Audit</CardTitle>
         <CardDescription>Security analysis and recommendations</CardDescription>
       </CardHeader>
       <CardContent className="flex-grow overflow-auto">
         {loading ? (
-          <div className="flex flex-col items-center justify-center h-64">
+          <div className="flex flex-col items-center justify-center h-32">
             <Loader2 className="h-8 w-8 animate-spin" />
             <p className="mt-2">Analyzing contract...</p>
           </div>
         ) : (
-          <pre className="whitespace-pre-wrap text-sm">{analysis}</pre>
+          <Markdown className="whitespace-pre-line font-mono text-sm text-wrap">{analysis}</Markdown>
         )}
       </CardContent>
     </Card>

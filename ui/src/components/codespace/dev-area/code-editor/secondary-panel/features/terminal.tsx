@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const Terminal = () => {
   const [command, setCommand] = useState<string>("");
-  const [output, setOutput] = useState<string>("");
+  const [output, setOutput] = useState<string>("This is your regular console, type commands to get started.");
   const { homeFolderPath } = useCodespaceStore();
   const [changed_diretories, setChangedDirectories] = useState<string[]>([]);
 
@@ -43,11 +43,11 @@ const Terminal = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <div className="flex-1 text-sm font-mono px-2 whitespace-pre overflow-auto max-h-[9.6rem]">{output}</div>
-      <div className="flex flex-row gap-2 w-full border-t py-1 bg-muted">
+    <>
+      <div className="text-sm font-mono p-2 whitespace-pre">{output}</div>
+      <div className="flex flex-row gap-2 w-full border-t py-1 bg-muted fixed bottom-0">
         <ChevronRight className="w-4" />
-        <form className="flex-1 " onSubmit={handleSubmit}>
+        <form className="flex-1" onSubmit={handleSubmit}>
           <input
             type="text"
             value={command}
@@ -57,7 +57,7 @@ const Terminal = () => {
           />
         </form>
       </div>
-    </div>
+    </>
   );
 };
 
