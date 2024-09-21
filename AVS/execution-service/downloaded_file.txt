@@ -1,0 +1,212 @@
+
+        You are a knowledgeable assistant. Your task is to answer the user's query by primarily using the provided context. If the context does not contain sufficient information, you may use your general knowledge to provide a relevant answer, but avoid any assumptions or inaccuracies.
+
+            **Context:**
+            You will need to generate nodes yourself. `localnet` gives you the total control over accounts, economics, and other factors for more advanced use cases (including making changes to `nearcore`). For developers, `localnet` is the right choice if you prefer to avoid leaking information about your work during the development process.
+
+More on local development [here](https://near-nodes.io/validator/running-a-node)
+
+`near-cli` [network selection](/tools/near-cli#network-selection) variable is `local`
+
+---
+
+:::tip Got a question?
+<a href="https://stackoverflow.com/questions/tagged/nearprotocol" target="_blank" rel="noopener noreferrer">
+<h8>Ask it on StackOverflow!</h8>
+</a>
+:::
+---
+id: what-is
+title: What is Chain Abstraction? 
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import {CodeTabs, Language, Github} from "@site/src/components/codetabs"
+
+The idea behind `chain abstraction` is quite simple: **blockchain** technology should be **abstracted away** from the user experience. In other words, people should **not realize** when they are **using a blockchain**, nor **which blockchain** they are using.
+
+![img](/docs/assets/welcome-pages/chain-abstraction-landing.png)
+
+To help on this task, NEAR Protocol provides services that allow to **create** and **recover accounts** using **email addresses**, use the account **without acquiring funds**, and **control accounts** in **other chains**. All in the most **seamless** way possible.
+
+---
+
+## Fast-Auth: Email onboarding
+One of the first barriers that new users face when entering the world of Web3 is the need to create a crypto wallet. This generally implies the need to choose a wallet, create and store a recovery phrase, and obtain deposit funds to start using the account.
+
+With FastAuth, users only need to provide an email address to create a NEAR account. Using the same email address the user will be able to use their account across applications and devices.
+
+:::info
+FastAuth accounts are kept safe through multi-party computation (MPC) on a decentralized network. This means that the user's private key is never stored in a single location, and thus it is never exposed to any single party.
+:::
+
+<hr subclass="subsection" />
+
+## Relayers: Cover gas fees
+Allowing users to start using a dApp without having to acquire funds is a powerful tool to increase user adoption. NEAR Protocol provides a service that allows developers to subsidize gas fees for their users.
+
+This concept, known as "Account Abstraction" in other chains, is a **built-in feature** in NEAR. User can wrap transactions in messages known as **meta-transaction**, that any other account can relay to the network.
+
+:::tip
+In NEAR the relayers simply attach NEAR to cover gas fees, and pass the transaction to the network. There, the transaction is executed as if the **user had sent it**.
+---
+id: networks
+title: NEAR Networks
+sidebar_label: Networks
+---
+
+NEAR Protocol operates on several networks each operating with their own independent validators and unique state. These networks are as follows:
+
+- [`mainnet`](/concepts/basics/networks#mainnet)
+- [`testnet`](/concepts/basics/networks#testnet)
+- [`localnet`](/concepts/basics/networks#localnet)
+
+## Mainnet {#mainnet}
+
+`mainnet` is for production ready smart contracts and live token transfers. Contracts ready for `mainnet` should have gone through rigorous testing and independent security reviews if necessary. `mainnet` is the only network where state is guaranteed to persist over time _(subject to the typical security guarantees of the network's validation process)_.
+
+- Status: `https://rpc.mainnet.near.org/status`
+- [ [NearBlocks Explorer](https://nearblocks.io) ]
+- [ [Wallet](https://wallet.near.org) ]
+- [ [Data Snapshots](https://near-nodes.io/intro/node-data-snapshots) ]
+
+## Testnet {#testnet}
+
+`testnet` is a public network and the final testing network for `nearcore` changes before deployment to `mainnet`. `testnet` is intended for testing all aspects of the NEAR platform prior to `mainnet` deployment. From account creation, mock token transfers, development tooling, and smart contract development, the `testnet` environment closely resembles `mainnet` behavior. All `nearcore` changes are deployed as release candidates on first testnet, before the changes are released on `mainnet`. A number of `testnet` validators validate transactions and create new blocks. dApp developers deploy their applications on `testnet` before deploying on `mainnet`. It is important to note that `testnet` has its own transactions and states.
+
+- Status: `https://rpc.testnet.near.org/status`
+- [ [Explorer](https://testnet.nearblocks.io) ]
+- [ [Wallet](https://testnet.mynearwallet.com/) ]
+- [ [Data Snapshots](https://near-nodes.io/intro/node-data-snapshots) ]
+
+## Localnet {#localnet}
+
+`localnet` is intended for developers who want to work with the NEAR platform independent of the public blockchain.
+Now that we have a key pair for our subaccount, we can deploy the contract to `testnet` and interact with it!
+
+#### What's a codehash?
+
+We're almost ready to deploy the smart contract to the account, but first let's take a look at the account we're going to deploy to. Remember, this is the subaccount we created earlier. To view the state easily with NEAR CLI, you may run this command:
+
+<Tabs groupId="cli-tabs">
+  <TabItem value="short" label="Short">
+  
+  ```bash
+  near state crossword.friend.testnet --networkId testnet
+  ```
+  </TabItem>
+
+  <TabItem value="full" label="Full">
+  
+  ```bash
+  near account view-account-summary crossword.friend.testnet network-config testnet now
+  ```
+  </TabItem>
+</Tabs>
+
+What you'll see is something like this:
+
+```bash
+------------------------------------------------------------------------------------------
+ crossword.friend.testnet         At block #167331831
+                                  (Evjnf29LuqFE7FUf97VQZzNfnUgPFLNyyiUk9qr4Wjri)
+------------------------------------------------------------------------------------------
+ Native account balance           10.01 NEAR
+------------------------------------------------------------------------------------------
+ Validator stake                  0 NEAR
+------------------------------------------------------------------------------------------
+ Storage used by the account      182 B
+------------------------------------------------------------------------------------------
+ Contract (SHA-256 checksum hex)  No contract code
+------------------------------------------------------------------------------------------
+ Access keys                      1 full access keys and 0 function-call-only access keys
+------------------------------------------------------------------------------------------
+```
+
+Note the `Contract` SHA-256 checksum is missing. This indicates that there is no contract deployed to this account.
+
+Let's deploy the contract (to the subaccount we created) and then check this again.
+
+### Deploy the contract
+
+Ensure that in your command line application, you're in the directory that contains the `Cargo.toml` file, then run:
+
+```bash
+cargo near deploy crossword.friend.testnet without-init-call network-config testnet sign-with-keychain send
+```
+
+Congratulations, you've deployed the smart contract! Note that NEAR CLI will output a link to [NEAR Explorer](https://nearblocks.io/) where you can inspect details of the transaction.
+
+Lastly, let's run this command again and notice that the `Contract` has a SHA-256 checksum. This is the hash of the smart contract deployed to the account.
+- method: `network_info`
+- params: _none_
+
+Example:
+
+<Tabs>
+<TabItem value="json" label="JSON" default>
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": "dontcare",
+  "method": "network_info",
+  "params": []
+}
+```
+
+</TabItem>
+<TabItem value="http" label="HTTPie">
+
+```bash
+http post https://rpc.testnet.near.org jsonrpc=2.0 method=network_info params:='[]' id=dontcare
+```
+
+</TabItem>
+</Tabs>
+
+<details>
+<summary>Example response:</summary>
+<p>
+
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "active_peers": [
+      {
+        "id": "ed25519:GkDv7nSMS3xcqA45cpMvFmfV1o4fRF6zYo1JRR6mNqg5",
+        "addr": "35.193.24.121:24567",
+        "account_id": null
+      }
+    ],
+    "num_active_peers": 34,
+    "peer_max_count": 40,
+    "sent_bytes_per_sec": 17754754,
+    "received_bytes_per_sec": 492116,
+    "known_producers": [
+      {
+        "account_id": "node0",
+        "addr": null,
+        "peer_id": "ed25519:7PGseFbWxvYVgZ89K1uTJKYoKetWs7BJtbyXDzfbAcqX"
+      }
+    ]
+  },
+  "id": "dontcare"
+}
+```
+
+</p>
+</details>
+
+#### What could go wrong? {#what-could-go-wrong-1}
+
+When API request fails, RPC server returns a structured error response with a limited number of well-defined error variants, so client code can exhaustively handle all the possible error cases. Our JSON-RPC errors follow [verror](https://github.com/joyent/node-verror) convention for structuring the error response:
+
+
+            **User Query:**
+            what is near network
+
+            Please provide a clear and concise answer to the user's query. If you use information from your own knowledge, make it clear and ensure it is accurate. RETURN THE ANSWER IN MARKDOWN FORMAT SO THAT IT CAN BE RENDERED PROPERLY.
+        

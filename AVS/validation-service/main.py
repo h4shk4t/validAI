@@ -31,11 +31,8 @@ model = OpenAIEmbedding(
 )
 
 def get_embedding(text):
+    # print("Getting embedding for text:", text)
     return model.get_text_embedding(text)
-
-def get_embedding(text: str):
-    """Generate sentence embedding using SBERT model."""
-    return model.encode(text)
 
 async def call_groq_api(file_id, model_name):
     """Make an API call to Groq with given data."""
@@ -55,17 +52,17 @@ async def call_groq_api(file_id, model_name):
 
 async def validate_response(data: str, proof_of_task: str):
     """Validate response by comparing embeddings."""
-    # Split first 32 characters
-    file_id = proof_of_task[:32]
-    model_name = proof_of_task[32:]
+    # Split by ~ to get file_id and model_name
+    print(data.split("~"))
+    [file_id, model_name] = data.split("~")
     embedding = get_embedding(await call_groq_api(file_id, model_name))
     # Example check: replace with actual logic
     proof_of_task = json.loads(proof_of_task)
     # if proof_of_task == "2ac9b7acde3df183fe73cf1d571847b6829dca593fb2687d47939aa1c1788b63":
     #     return True
     # Additional similarity check with cosine distance
-    print("Cosine similarity:", cosine(embedding, get_embedding(proof_of_task)))
-    if cosine(embedding, get_embedding(proof_of_task)) > 0.7:
+    print("Cosine similarity:", cosine(embedding, proof_of_task))
+    if cosine(embedding, proof_of_task) > 0.07:
         return True
     return False
 
@@ -76,7 +73,7 @@ async def log_requests(request: Request, call_next):
     print(f"Request: {request.method} {request.url}")
     try:
         body = await request.json()
-        print(f"Request body: {json.dumps(body, indent=2)}")
+        # print(f"Request body: {json.dumps(body, indent=2)}")
     except Exception as e:
         print(f"Failed to read request body: {e}")
     response = await call_next(request)
@@ -89,14 +86,14 @@ async def validate_task(request: Request):
     data = rpc_body.get("data", {})
     task_definition_id = rpc_body.get("taskDefinitionId", "")
     performer = rpc_body.get("performer", "")
-    try:
-        is_approved = await validate_response(data, proof_of_task)
-        response = CustomResponse(is_approved=is_approved)
-        return JSONResponse(status_code=status.HTTP_200_OK, content=response.dict())
-    except Exception as err:
-        print(f"Error: {err}")
-        error_response = CustomError(detail="Validation failed", data={})
-        return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=error_response.dict())
+    # try:
+    is_approved = await validate_response(data, proof_of_task)
+    response = CustomResponse(is_approved=is_approved)
+    return JSONResponse(status_code=status.HTTP_200_OK, content=response.dict())
+    # except Exception as err:
+    #     print(f"Error: {err}")
+    #     error_response = CustomError(detail="Validation failed", data={})
+    #     return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=error_response.dict())
 
 # Run the server
 if __name__ == "__main__":
