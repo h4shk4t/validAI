@@ -36,7 +36,7 @@ const AnimatedImage: React.FC<AnimatedImageProps> = ({ src, alt, width, height, 
 
   return (
     <motion.div 
-      className="flex justify-center items-center overflow-visible p-10"
+      className="flex justify-center items-center overflow-visible p-4"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => setIsHovered(true)}

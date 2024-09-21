@@ -31,7 +31,7 @@ const LoginModal = () => {
                 navigate("/repos");
               }
             }}
-            className="mb-10 text-lg px-10 py-6"
+            className="mb-4 text-lg px-10 py-6 bg-[#0D152D] border-[#243A64] border hover:bg-[#112050]"
             variant={"expandIcon"}
             iconPlacement="right"
             Icon={MoveRight}
@@ -40,7 +40,7 @@ const LoginModal = () => {
           </Button>
         ) : (
           <Button
-            className="mb-10 text-lg px-10 py-6"
+            className="mb-4 text-lg px-10 py-6 bg-[#0D152D] border-[#243A64] border hover:bg-[#112050]"
             variant={"expandIcon"}
             iconPlacement="right"
             Icon={MoveRight}
@@ -66,8 +66,8 @@ const LoginModal = () => {
         </div>
         <div className="flex flex-col space-y-4">
           {isGithubLoggedIn ? (
-            <p className="inline-flex items-center gap-2">
-              Github logged in <Check className="w-4 h-4" />
+            <p className="inline-flex items-center justify-center gap-2 w-full">
+              <span className="text-green-500">Github logged in</span> 🎉
             </p>
           ) : (
             <Button
