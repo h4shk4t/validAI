@@ -50,8 +50,19 @@ const LoginModal = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Login with Github and Dynamic</DialogTitle>
+          <DialogTitle>Login in through Dynamic and Github</DialogTitle>
         </DialogHeader>
+        <div className="flex justify-center my-4">
+          <div className="relative">
+            <div className="absolute inset-0 bg-purple-500 opacity-20 blur-xl"></div>
+            <img
+              src="/hexagon.png"
+              alt="3D Hexagon"
+              className="w-30 h-28 animate-spin-slow relative z-10"
+              style={{ animation: 'spin 10s linear infinite' }}
+            />
+          </div>
+        </div>
         <div className="flex flex-col space-y-4">
           {isGithubLoggedIn ? (
             <p className="inline-flex items-center gap-2">
@@ -63,8 +74,9 @@ const LoginModal = () => {
                 (window.location.href =
                   "https://github.com/login/oauth/authorize?client_id=Ov23liRv0ktKpaw29Jfw&scope=repo,user")
               }
+              className="bg-[#0D152D] border-[#243A64] border"
             >
-              Sign up with <Github className="w-4 h-4 ml-2" />
+              Login with <Github className="w-4 h-4 ml-2" />
             </Button>
           )}
           <DynamicWidget />
