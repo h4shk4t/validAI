@@ -15,13 +15,14 @@ load_dotenv()
 
 # Load the pre-trained SBERT model
 # Set OpenAI embedding model settings
-Settings.embed_model = OpenAIEmbedding(
+model = OpenAIEmbedding(
     api_base="https://api.red-pill.ai/v1",
     api_key=os.environ["API_KEY"],
     model="text-embedding-3-large"
 )
+
 def get_embedding(text):
-    return model.encode(text).tolist()
+    return model.get_text_embedding(text)
 
 # Read the private key from the environment variable
 private_key = os.environ.get("PRIVATE_KEY")
@@ -65,34 +66,34 @@ validation_service_address = "http://0.0.0.0:4002"
 # # Create a contract instance
 # contract = web3.eth.contract(address=contract_address, abi=contract_abi)
 
-# Define a function for backend processing
-def perform_backend_processing(sender, value):
-    print(f"Processing data: Sender = {sender}, Value = {value}")
-    # Insert your backend logic here (e.g., database update)
+# # Define a function for backend processing
+# def perform_backend_processing(sender, value):
+#     print(f"Processing data: Sender = {sender}, Value = {value}")
+#     # Insert your backend logic here (e.g., database update)
 
-# Define the event filter (optional: specify fromBlock, toBlock)
-event_filter = contract.events.DataEmitted.createFilter(fromBlock='latest')
+# # Define the event filter (optional: specify fromBlock, toBlock)
+# event_filter = contract.events.DataEmitted.createFilter(fromBlock='latest')
 
-# Function to handle new events
-def handle_event(event):
-    # Extract event data
-    sender = event['args']['sender']
-    value = event['args']['value']
+# # Function to handle new events
+# def handle_event(event):
+#     # Extract event data
+#     sender = event['args']['sender']
+#     value = event['args']['value']
     
-    # Print received data
-    print(f"Event received: Sender = {sender}, Value = {value}")
+#     # Print received data
+#     print(f"Event received: Sender = {sender}, Value = {value}")
     
-    # Process the event data
-    perform_backend_processing(sender, value)
+#     # Process the event data
+#     perform_backend_processing(sender, value)
 
-# Poll for events
-def listen_for_events():
-    while True:
-        for event in event_filter.get_new_entries():
-            handle_event(event)
+# # Poll for events
+# def listen_for_events():
+#     while True:
+#         for event in event_filter.get_new_entries():
+#             handle_event(event)
 
-if __name__ == "__main__":
-    listen_for_events()
+# if __name__ == "__main__":
+#     listen_for_events()
 
 async def main():
     print(f"Private key: {private_key}")
