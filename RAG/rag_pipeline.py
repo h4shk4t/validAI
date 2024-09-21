@@ -117,7 +117,7 @@ def split_text(text: str, file_path: str) -> list[BaseNode]:
     nodes = splitter.get_nodes_from_documents([Document(text=text)])
 
     for node in nodes:
-        node.metadata = {"file_path": f"./{file_path}"}
+        node.metadata = {"file_path": f"{file_path}"}
 
     return nodes
 
@@ -216,5 +216,53 @@ def search_with_args(index_name: str, query: str) -> None:
         print(result.node.text)
 
 
+
+def merge():
+    filepath1 = "./nethermind_dist"
+    filepath2 = "./near_dist"
+    filepath3 = "./phala_dist"
+    # open all thee files in these directories and read the markdown content iteratively and add in nodes
+    nodes = []
+    for file in os.listdir(filepath1):
+        file_path = os.path.join(filepath1, file)
+        try:
+            with open(file_path, "r") as f:
+                text = f.read()
+                nodes.extend(split_text(text, file_path))
+        except FileNotFoundError:
+            print(f"File not found: {file_path}")
+        except Exception as e:
+            print(f"An error occurred while processing {file_path}: {e}")
+    
+    for file in os.listdir(filepath2):
+        file_path = os.path.join(filepath2, file)
+        try:
+            with open(file_path, "r") as f:
+                text = f.read()
+                nodes.extend(split_text(text, file_path))
+        except FileNotFoundError:
+            print(f"File not found: {file_path}")
+        except Exception as e:
+            print(f"An error occurred while processing {file_path}: {e}")
+    
+    for file in os.listdir(filepath3):
+        file_path = os.path.join(filepath3, file)
+        try:
+            with open(file_path, "r") as f:
+                text = f.read()
+                nodes.extend(split_text(text, file_path))
+        except FileNotFoundError:
+            print(f"File not found: {file_path}")
+        except Exception as e:
+            print(f"An error occurred while processing {file_path}: {e}")
+            
+    faiss_index = faiss.IndexFlatIP(3072)
+    vector_store = FaissVectorStore(faiss_index=faiss_index)
+
+    storage_context = StorageContext.from_defaults(vector_store=vector_store)
+    index = VectorStoreIndex(nodes, storage_context=storage_context)
+    index.storage_context.persist(f"./index_store/")
+    
+    
 if __name__ == "__main__":
     main()
