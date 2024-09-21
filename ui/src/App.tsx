@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "@/pages/home";
 import DashboardPage from "@/pages/dashboard";
 import CodePage from "@/pages/code";
+import MarketplacePage from "@/pages/marketplace";
 import Callback from "./pages/callback";
 import Repos from "./pages/repos";
 import Dynamic from "./pages/dyanmic";
@@ -25,6 +26,7 @@ function App() {
           <Route path="/callback" element={<Callback />} />
           <Route path="/repos" element={<Repos />} />
           <Route path="/dynamic" element={<Dynamic />} />
+          <Route path="/marketplace" element={<MarketplacePage />} />
         </Routes>
       </Router>
     </DynamicContextProvider>
