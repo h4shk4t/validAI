@@ -12,7 +12,9 @@ client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
 
-async def call_groq_api(data):
+async def call_groq_api(params):
+    file_id = params[0]
+    model_name = params[1]
     chat_completion = client.chat.completions.create(
         messages=[
             {
@@ -20,7 +22,7 @@ async def call_groq_api(data):
                 "content": "How to check if my solidity contract is safe?",
             }
         ],
-        model="llama3-8b-8192",
+        model=model_name,
     )
     # Only print first 5 lines of the response
     print(chat_completion.choices[0].message.content[:50] + "...")
@@ -33,6 +35,7 @@ async def jsonrpc_handler(request: Request):
     req_json = await request.json()
     if req_json.get("method") == "generate_response":
         params = req_json.get("params", {})
+        print(params)
         response = await call_groq_api(params)
         return {
             "jsonrpc": "2.0",

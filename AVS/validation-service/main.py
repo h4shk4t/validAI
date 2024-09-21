@@ -3,13 +3,13 @@ from fastapi import FastAPI, HTTPException, status, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Any
-from sentence_transformers import SentenceTransformer
 from groq import Groq
 from scipy.spatial.distance import cosine
 import json
 import numpy as np
 import os
 import uvicorn
+from llama_index.embeddings.openai import OpenAIEmbedding
 
 # Load environment variables
 load_dotenv()
@@ -24,14 +24,20 @@ class CustomError(BaseModel):
 # Set up Groq client with environment variable
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-# Load the pre-trained SBERT model
-model = SentenceTransformer('all-MiniLM-L6-v2')
+model = OpenAIEmbedding(
+    api_base="https://api.red-pill.ai/v1",
+    api_key=os.environ["API_KEY"],
+    model="text-embedding-3-large"
+)
+
+def get_embedding(text):
+    return model.get_text_embedding(text)
 
 def get_embedding(text: str):
     """Generate sentence embedding using SBERT model."""
     return model.encode(text)
 
-async def call_groq_api(data: str):
+async def call_groq_api(file_id, model_name):
     """Make an API call to Groq with given data."""
     try:
         chat_completion = client.chat.completions.create(
@@ -39,7 +45,7 @@ async def call_groq_api(data: str):
                 "role": "user",
                 "content": "How to check if my solidity contract is safe?",
             }],
-            model="llama3-8b-8192"
+            model=model_name
         )
         response_content = chat_completion.choices[0].message.content
         print("Groq API Response:", response_content[:50] + "...")
@@ -49,11 +55,16 @@ async def call_groq_api(data: str):
 
 async def validate_response(data: str, proof_of_task: str):
     """Validate response by comparing embeddings."""
-    embedding = get_embedding(await call_groq_api(data))
+    # Split first 32 characters
+    file_id = proof_of_task[:32]
+    model_name = proof_of_task[32:]
+    embedding = get_embedding(await call_groq_api(file_id, model_name))
     # Example check: replace with actual logic
-    if proof_of_task == "2ac9b7acde3df183fe73cf1d571847b6829dca593fb2687d47939aa1c1788b63":
-        return True
+    proof_of_task = json.loads(proof_of_task)
+    # if proof_of_task == "2ac9b7acde3df183fe73cf1d571847b6829dca593fb2687d47939aa1c1788b63":
+    #     return True
     # Additional similarity check with cosine distance
+    print("Cosine similarity:", cosine(embedding, get_embedding(proof_of_task)))
     if cosine(embedding, get_embedding(proof_of_task)) > 0.7:
         return True
     return False
