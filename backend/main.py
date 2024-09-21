@@ -2,11 +2,12 @@ from flask import Flask, request, jsonify
 import os
 from flask_cors import CORS
 import subprocess
+import requests
 
 app = Flask(__name__)
 PORT=8000
 id_counter = 0
-CORS(app)
+CORS(app, resources={r"*": {"origins": "*"}}) 
 
 def generate_tree(directory):
     global id_counter
@@ -146,6 +147,30 @@ def run_command():
     else:
         return jsonify({"output": result.stderr}), 400
 
+@app.route("/token", methods=["POST"])
+def get_token():
+    data = request.get_json()
+    token = data["code"]
+    response = requests.post(
+        "https://github.com/login/oauth/access_token",
+        data={
+            "client_id": os.environ["CLIENT_ID"],
+            "client_secret": os.environ["CLIENT_SECRET"],
+            "code": token,
+        },
+        headers={"Accept": "application/json"},
+    )
+    access_token = response.json()["access_token"]
+    print(response.json())
+
+    data = requests.get(
+        "https://api.github.com/user",
+        headers={"Authorization": f"Bearer {access_token}"},
+    ).json()
+    
+    response = jsonify({"access_token": access_token, "user_name": data.user.login})
+
+    return response, 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True, port=PORT)

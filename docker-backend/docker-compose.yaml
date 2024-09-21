@@ -1,9 +1,0 @@
-version: '3.7'
-
-services:
-  flask-app:
-    build: .
-    volumes:
-      - ./repos:/app/repos
-    ports:
-      - "8000:8000"

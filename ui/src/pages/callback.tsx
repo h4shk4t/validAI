@@ -11,6 +11,8 @@ const Callback = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get("code");
   const setToken = useTokenStore((s) => s.setToken);
+  const token = useTokenStore((s) => s.token);
+  console.log("token", token);
   useEffect(() => {
     const fetchAccessToken = async () => {
       if (code) {
@@ -25,6 +27,7 @@ const Callback = () => {
           const accessToken = response?.data?.access_token;
           if (accessToken) {
             setToken(accessToken);
+            console.log("accessToken", response.data);  
             navigate("/repos");
           }
         } catch (error) {
