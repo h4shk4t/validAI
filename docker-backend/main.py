@@ -2,11 +2,16 @@ from flask import Flask, request, jsonify
 import os
 from flask_cors import CORS
 import subprocess
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-PORT=8000
+PORT = 8000
 id_counter = 0
 CORS(app)
+
 
 def generate_tree(directory):
     global id_counter
@@ -102,7 +107,7 @@ def create_folder():
         return jsonify({"message": "Folder created successfully"}), 200
     except FileExistsError:
         return jsonify({"error": "folder already exists"}), 409
-    
+
 
 @app.route("/create-file", methods=["POST"])
 def create_file():
@@ -145,6 +150,23 @@ def run_command():
         return jsonify({"output": result.stdout}), 200
     else:
         return jsonify({"output": result.stderr}), 400
+
+
+@app.route("/token", methods=["POST"])
+def get_token():
+    data = request.get_json()
+    token = data["code"]
+    response = requests.post(
+        "https://github.com/login/oauth/access_token",
+        data={
+            "client_id": os.environ["CLIENT_ID"],
+            "client_secret": os.environ["CLIENT_SECRET"],
+            "code": token,
+        },
+        headers={"Accept": "application/json"},
+    )
+    print(response.json())
+    return response.json()
 
 
 if __name__ == "__main__":
