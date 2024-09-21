@@ -16,19 +16,14 @@ const Callback = () => {
   useEffect(() => {
     const fetchAccessToken = async () => {
       if (code) {
-        console.log("code", code);
         try {
-          const response = await axios.post(
-            `${backend}/token`,
-            {
-              code,
-            }
-          );
+          const response = await axios.post(`${backend}/token`, {
+            code,
+          });
           const accessToken = response?.data?.access_token;
           if (accessToken) {
             setToken(accessToken);
-            console.log("accessToken", response.data);  
-            navigate("/repos");
+            navigate("/dynamic");
           }
         } catch (error) {
           console.error(error);
@@ -37,7 +32,7 @@ const Callback = () => {
     };
 
     fetchAccessToken();
-  }, [code, navigate]);
+  }, [code, navigate, setToken]);
   return (
     <div>
       <Button onClick={() => navigate("/dashboard")}>Go to dashboard</Button>
