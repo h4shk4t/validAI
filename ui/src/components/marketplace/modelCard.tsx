@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Download, Heart, Clock } from 'lucide-react';
 import { Model } from '@/types/model';
 import DescriptionModal from './descriptionModal';
+import { Dialog, DialogContent } from '../ui/dialog';
 
 interface ModelCardProps {
   model: Model;
@@ -49,16 +50,27 @@ const ModelCard: React.FC<ModelCardProps> = React.memo(({ model }) => {
           ))}
         </div>
       </div>
-      <DescriptionModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        model={{
-          title: model.title,
-          description: model.description || 'No description available.'
-        }}
-      />
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent>
+          <DescriptionModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            model={{
+              title: model.title,
+              description: model.description,
+              image: '/api/placeholder/100/100', // Using placeholder image
+              price: model.price,
+              category: model.type, // Assuming 'type' is equivalent to 'category'
+              downloads: model.downloads,
+              comments: 0, // Add a default value or fetch from model if available
+              rating: 0, // Add a default value or fetch from model if available
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
+
 });
 
 ModelCard.displayName = 'ModelCard';

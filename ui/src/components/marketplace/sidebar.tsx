@@ -34,7 +34,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeCategory, activeItem, onSelectC
 
   return (
     <div className="w-64 bg-gray-800 text-white p-4 shadow-lg">
-      <h2 className="text-xl font-bold mb-6 text-blue-400">EM EL MARKETPLACE</h2>
+      <img src="/lookout.png" alt="EM EL MARKETPLACE" className="mb-4 w-full max-w-[160px] mx-auto" />
+      <hr className="border-t border-gray-600 mb-7" />
       {categories.map((category) => (
         <div key={category.title} className="mb-6">
           <h3 className="font-semibold mb-3 text-gray-400 flex items-center">
