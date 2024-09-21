@@ -6,7 +6,7 @@ import subprocess
 import requests
 from dotenv import load_dotenv
 import requests
-from rag import search
+from rag import search, add_docs_to_index
 from upload import upload
 
 load_dotenv()
@@ -187,7 +187,7 @@ def rag_request():
         print(f"Number of contexts: {len(contexts)}")
         files = set(context["file_path"] for context in contexts)
         print(f"Number of unique files: {len(files)}")
-    
+
         # get these file contents and store them in a json like 'file_path.split('/')[-1]': content
         file_contents = {}
         for file in files:
@@ -213,8 +213,23 @@ def rag_request():
         hash = upload(prompt)
         print(f"Hash: {hash}")
         return jsonify({"hash": hash, "file_contents": file_contents}), 200
-                
 
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/add-docs", methods=["POST"])
+def add_docs():
+    try:
+        data = request.get_json()
+        link = data.get("link")
+        folder = data.get("name")
+
+        if not link or not folder:
+            return jsonify({"error": "Missing link or folder"}), 400
+
+        add_docs_to_index(link=link, index_name=folder)
+        return jsonify({"message": "Docs added successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

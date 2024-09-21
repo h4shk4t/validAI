@@ -125,13 +125,19 @@ def process_markdown(path: str) -> list[BaseNode]:
     return nodes
 
 
-def add_docs(link: str, index_name: str):
+def add_docs_to_index(link: str, index_name: str) -> None:
     dist_directory = get_markdown_github(link, index_name)
+    print("Processing markdown files...")
     nodes = process_markdown(dist_directory)
+    print("Adding documents to index...")
     vector_store = FaissVectorStore.from_persist_dir(index_store)
+    print("Vector store loaded")
     storage_context = StorageContext.from_defaults(
         vector_store=vector_store, persist_dir=index_store
     )
+    print("Storage context created")
     index = load_index_from_storage(storage_context=storage_context)
     index.insert_nodes(nodes)
+    print("Documents added to index")
     index.storage_context.persist(index_store)
+    print("Index persisted")
