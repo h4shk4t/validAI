@@ -42,9 +42,13 @@ export const saveFile = async (filePath: string, content: string) => {
     }
   );
   return res.data;
-}
+};
 
-export const cloneRepo = async (user_name: string, repo_name: string, token: string) => {
+export const cloneRepo = async (
+  user_name: string,
+  repo_name: string,
+  token: string
+) => {
   const res = await axios.post(
     `${backend}/clone-repo`,
     {
@@ -59,11 +63,28 @@ export const cloneRepo = async (user_name: string, repo_name: string, token: str
     }
   );
   return res.data;
-}
+};
 
 export const deleteFile = async (filePath: string) => {
   const res = await axios.delete(
     `${backend}/delete-file?file_path=${filePath}`
   );
   return res.data;
+};
+
+export const requestRag = async (query: string) => {
+  const modelName = "llama3-8b-8192";
+  const res = await axios.post(
+    `${backend}/rag`,
+    {
+      model_name: modelName,
+      query,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return { answer: res.data.answer, referencedFiles: res.data.file_contents };
 };

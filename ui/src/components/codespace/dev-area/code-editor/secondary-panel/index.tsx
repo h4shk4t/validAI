@@ -30,7 +30,7 @@ const SecondaryPanel = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="w-full h-10 bg-card">
+      <div className="w-full bg-card sticky">
         <div className="flex flex-row gap-2">
           {features.map((feature, index) => (
             <Button
@@ -45,7 +45,7 @@ const SecondaryPanel = () => {
           ))}
         </div>
       </div>
-      <div className="w-full flex-1 border-t relative overflow-y-scroll">
+      <div className="relative flex w-full flex-1 overflow-x-auto overflow-y-scroll border-t">
         {features[activeFeatureIndex].component}
       </div>
     </div>

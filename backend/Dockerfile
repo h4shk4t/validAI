@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y git
 
 COPY requirements.txt ./
 
-COPY .env ./app/
+COPY . ./app/
 
 RUN pip install -r requirements.txt
 

@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from eth_account import Account
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 from web3 import Web3
 from web3.auto import w3
 from llama_index.embeddings.openai import OpenAIEmbedding
@@ -33,19 +33,20 @@ private_key = os.environ.get("PRIVATE_KEY")
 rpc_base_address = "http://0.0.0.0:8545"
 validation_service_address = "http://0.0.0.0:4002"
 
-async def main(fileID, model_name):
+def main(fileID, model_name):
     print(f"Private key: {private_key}")
     print("Additional 10 second timeout for aggregator to spin up")
     increment = 0
-    # await asyncio.sleep(10)
+    # asyncio.sleep(10)
     increment += 1
     print(f"Interval: {increment}")
-    response = await generate_response(fileID, model_name)
+    response = generate_response(fileID, model_name)
     proof_of_task = get_embedding(response)
     print(f"Length of Proof of task: {len(proof_of_task)}")
-    await send_task(proof_of_task, fileID, model_name, 1)
+    send_task(proof_of_task, fileID, model_name, 1)
+    return response
 
-async def generate_response(fileID, model_name):
+def generate_response(fileID, model_name):
     execution_url = "http://0.0.0.0:4003"
     json_rpc_body = {
         "jsonrpc": "2.0",
@@ -63,11 +64,12 @@ async def generate_response(fileID, model_name):
         print(f"Error: {e}")
         raise e
 
-async def send_task(proof_of_task, fileID, model_name, task_definition_id):
+def send_task(proof_of_task, fileID, model_name, task_definition_id):
     account = Account.from_key(private_key)
     performer_address = account.address
-    data = fileID + model_name
-    data = Web3.to_hex(text=data)
+    print("Model name:", model_name)
+    data1 = fileID +"~"+ model_name
+    data = Web3.to_hex(text=data1)
     proof_of_task = str(proof_of_task)
     # proof_of_task = "2ac9b7acde3df183fe73cf1d571847b6829dca593fb2687d47939aa1c1788b63"
     task_definition_id = 0
@@ -86,7 +88,7 @@ async def send_task(proof_of_task, fileID, model_name, task_definition_id):
         "method": "sendTask",
         "params": [
             proof_of_task,
-            data,
+            data1,
             task_definition_id,
             performer_address,
             "0x" + signature,
@@ -111,10 +113,38 @@ def process_request():
         if not file_id or not model_name:
             return jsonify({"error": "Missing fileID or model_name"}), 400
 
-        asyncio.run(main(file_id, model_name))
-        return jsonify({"status": "Processing started"}), 200
+        response = main(file_id, model_name)
+        # asyncio.run(main(file_id, model_name))
+        return jsonify({"response": response}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/rag', methods=['POST'])
+def rag_request():
+    try:
+        data = request.get_json()
+        file_id = data.get('file_id')
+        model_name = data.get('model_name')
+        if not file_id or not model_name:
+            return jsonify({"error": "Missing fileID or model_name"}), 400
+        
+        response = main(file_id, model_name)
+        return jsonify({"response": response}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/add_docs', methods=['POST'])
+def add_docs():
+    try:
+        data = request.get_json()
+        link = data.get('link')
+        if not link:
+            return jsonify({"error": "Missing link"}), 400
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5002)
