@@ -224,5 +224,13 @@ def rag_request():
         return jsonify({"error": str(e)}), 500
 
 
+
+@app.route("/upload-to-ipfs", methods=["POST"])
+def upload_to_ipfs():
+    data = request.get_json()
+    content = data.get("content")
+    hash = upload(content)
+    return jsonify({"hash": hash}), 200
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True, port=PORT)

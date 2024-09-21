@@ -14,7 +14,6 @@ def upload(content: str) -> str:
         temp_file.write(content.encode("utf-8"))
         temp_file_path = temp_file.name
     
-    tag = "rag"
-    upload_response = lh.upload(source=temp_file_path, tag=tag)
+    upload_response = lh.upload(source=temp_file_path)
     return upload_response["data"]["Hash"]
     
