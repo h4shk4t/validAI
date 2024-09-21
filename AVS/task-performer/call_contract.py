@@ -1,8 +1,14 @@
 from py_near import NearAsync, providers
 import asyncio
 from py_near.account import Account
+from py_near.dapps.core import NEAR
+from dotenv import load_dotenv
+import os
 
-# Configure NEAR connection to testnet or mainnet
+load_dotenv()
+# Configure NEAR connection to testnet or mainnet'
+ACCOUNT_ID = "hashkat.testnet"
+NEAR_KEY = os.environ.get("NEAR_KEY")
 near = NearAsync(providers.JsonRpcProvider('https://rpc.testnet.near.org'))
 
 async def check_event(tx_hash, account_id):
@@ -13,6 +19,9 @@ async def check_event(tx_hash, account_id):
 async def make_method_call(account_id, private_key, contract_id, method, args):
     # Initialize the account
     account = Account(near, account_id, private_key)
+
+    await account.startup()
+    print(f"Account balance: {await account.get_balance()/NEAR}")
 
     # Call the contract method
     result = await account.call_function(
@@ -40,8 +49,8 @@ async def monitor_and_respond(tx_hash, account_id, private_key, contract_id, met
 async def main():
     await monitor_and_respond(
         tx_hash="<transaction_hash>",
-        account_id="<account_id>",
-        private_key="<private_key>",
+        account_id=ACCOUNT_ID,
+        private_key=NEAR_KEY,
         contract_id="<contract_id>",
         method="method_to_call",
         args={"param": "value"}
