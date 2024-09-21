@@ -8,6 +8,13 @@ module.exports = {
     './src/**/*.{ts,tsx}',
   ],
   prefix: "",
+
+import tailwindAnimate from "tailwindcss-animate";
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     container: {
       center: true,
@@ -59,17 +66,22 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
+          from: { height: 0 },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          to: { height: 0 },
+        },
+        shine: {
+          from: { backgroundPosition: "200% 0" },
+          to: { backgroundPosition: "-200% 0" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        shine: "shine 8s ease-in-out infinite",
       },
     },
   },

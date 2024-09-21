@@ -1,9 +1,7 @@
-import React from 'react'
+import CodeSpace from "@/components/codespace";
 
 const CodePage = () => {
-  return (
-    <div>CodePage</div>
-  )
-}
+  return <CodeSpace />;
+};
 
-export default CodePage
+export default CodePage;

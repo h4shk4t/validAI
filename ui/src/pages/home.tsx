@@ -33,6 +33,17 @@ const itemVariants = {
 export default function HomePage() {
   return (
     <main>
+      <div>
+      <Button onClick={() => navigate("/code")}>Go to editor</Button>
+      <Button
+        onClick={() =>
+          (window.location.href =
+            "https://github.com/login/oauth/authorize?client_id=Ov23liRv0ktKpaw29Jfw&scope=repo,user")
+        }
+      >
+        Sign in with GitHub
+      </Button>
+    </div>
       <div className="z-0 relative min-h-screen w-full pb-40 overflow-hidden bg-[radial-gradient(97.14%_56.45%_at_51.63%_0%,_#7D56F4_0%,_#4517D7_30%,_#000_100%)]">
         <DotPattern className={cn(
           "[mask-image:radial-gradient(50vw_circle_at_center,white,transparent)]",
@@ -76,6 +87,7 @@ export default function HomePage() {
           </motion.div>
         </MotionDiv>
       </div>
+      
     </main>
   );
 }
