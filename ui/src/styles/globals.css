@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: "geist";
+    src: url("../assets/fonts/GeistVF.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "geist-mono";
+    src: url("../assets/fonts/GeistMonoVF.ttf") format("truetype");
+  }
   :root {
     --background: 222 28% 7%;
     --foreground: 47 7% 73%;
