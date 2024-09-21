@@ -115,12 +115,26 @@ export default function HomePage() {
                   className="w-full h-auto object-contain"
                 />
               </div>
+              <div className="w-24 h-28 flex items-center">
+                <img
+                  src="/phala.png"
+                  alt="Phala Logo"
+                  className="w-24 h-auto object-contain"
+                />
+              </div>
+              <div className="w-32 h-28 flex items-center">
+                <img
+                  src="/near.png"
+                  alt="Near Protocol Logo"
+                  className="w-full h-auto object-contain"
+                />
+              </div>
             </div>
           </motion.div>
 
           <motion.div variants={itemVariants}>
             <AnimatedImage
-              src="/shot.png"
+              src="/image.png"
               alt="Web3 IDE Screenshot"
               width={1200}
               height={900}
