@@ -44,6 +44,23 @@ export const saveFile = async (filePath: string, content: string) => {
   return res.data;
 }
 
+export const cloneRepo = async (user_name: string, repo_name: string, token: string) => {
+  const res = await axios.post(
+    `${backend}/clone-repo`,
+    {
+      user_name,
+      repo_name,
+      token,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res.data;
+}
+
 export const deleteFile = async (filePath: string) => {
   const res = await axios.delete(
     `${backend}/delete-file?file_path=${filePath}`
