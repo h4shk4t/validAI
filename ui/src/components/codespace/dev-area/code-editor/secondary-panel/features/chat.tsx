@@ -24,6 +24,7 @@ const Chat = () => {
   const [query, setQuery] = useState<string>("");
   const [thinking, setThinking] = useState(false);
   const [output, setOutput] = useState("Hello! How can I help you today?");
+
   const [referenceFiles, setReferenceFiles] = useState<ReferenceFile[]>([]);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -45,6 +46,7 @@ const Chat = () => {
   }, [output]);
 
   return (
+
   //   <div className="flex flex-col h-full">
   //     <div className="flex-grow overflow-hidden flex" ref={chatContainerRef}>
         <div className="grid grid-cols-4 gap-4 h-full w-full">
@@ -74,6 +76,7 @@ const Chat = () => {
                       <div className="h-[36rem] overflow-y-auto">
                         <Markdown className="whitespace-pre-wrap text-sm bg-white/5 rounded-md p-2">
                           {referenceFiles[fileName]}
+
                         </Markdown>
                       </div>
                     </DialogContent>

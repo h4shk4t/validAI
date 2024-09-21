@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: "geist";
+    src: url("../assets/fonts/GeistVF.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "geist-mono";
+    src: url("../assets/fonts/GeistMonoVF.ttf") format("truetype");
+  }
   :root {
     --background: 222 28% 7%;
     --foreground: 47 7% 73%;
@@ -54,6 +62,29 @@
   }
 }
 
+@layer utilities {
+  @layer utilities {
+    .custom-scrollbar {
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: rgba(255, 255, 255, 0.2) transparent; /* Firefox */
+
+      /* For Webkit-based browsers (Chrome, Safari, Edge) */
+      &::-webkit-scrollbar {
+        width: 4px;
+        
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2); /* bg-white/20 */
+        border-radius: 9999px; /* Large rounded */
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+    }
+  }
+}
 
 @layer base {
   * {
