@@ -161,16 +161,9 @@ def get_token():
         headers={"Accept": "application/json"},
     )
     access_token = response.json()["access_token"]
-    print(response.json())
-
-    data = requests.get(
-        "https://api.github.com/user",
-        headers={"Authorization": f"Bearer {access_token}"},
-    ).json()
     
-    response = jsonify({"access_token": access_token, "user_name": data.user.login})
+    return jsonify({"access_token": access_token}), 200
 
-    return response, 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True, port=PORT)
