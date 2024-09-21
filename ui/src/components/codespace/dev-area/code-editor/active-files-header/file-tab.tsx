@@ -17,7 +17,7 @@ const FileTab = ({
   return (
     <button
       className={`text-sm h-full w-36 border-r inline-flex items-center px-2 justify-between ${
-        isActive && "bg-[#282A36]"
+        isActive && "bg-secondary-foreground"
       }`}
       onClick={() => setSelectedFile(file)}
     >

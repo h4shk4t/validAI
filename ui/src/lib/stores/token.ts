@@ -8,9 +8,12 @@ interface TokenStore {
 }
 
 const useTokenStore = create<TokenStore>((set) => ({
-  token: "",
+  token: localStorage.getItem("token") || "",
   username: "",
-  setToken: (token) => set({ token }),
+  setToken: (token) => {
+    localStorage.setItem("token", token);
+    set({ token });
+  },
   setUsername: (username) => set({ username }),
 }));
 

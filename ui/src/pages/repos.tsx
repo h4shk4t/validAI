@@ -15,7 +15,7 @@ const Repos = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setRepos(response.data);
+        setRepos(response.data)
         setLoading(false); 
       } catch (error) {
         console.error(error);
@@ -24,11 +24,12 @@ const Repos = () => {
     };
 
     fetchRepos();
+    console.log(repos[0]);
   }, [token]);
 
   return (
-    <div>
-      <h1>Repos</h1>
+    <div className="h-screen w-[60vw] mx-auto pt-4">
+      <h1 className="text-4xl">Hi, @vrag99 :)</h1>
       {loading ? (
         <div>Loading...</div>
       ) : (

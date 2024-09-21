@@ -3,6 +3,9 @@ import os
 from flask_cors import CORS
 import subprocess
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 PORT=8000
