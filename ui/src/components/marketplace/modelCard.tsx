@@ -52,7 +52,7 @@ const ModelCard: React.FC<ModelCardProps> = React.memo(({ model }) => {
   return (
     <>
       <div className="p-4 rounded-lg cursor-pointer" onClick={handleCardClick}>
-        <img src="/api/placeholder/100/100" alt={model.title} className="w-full h-32 object-cover mb-2 rounded-md" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/2048px-ChatGPT_logo.svg.png" alt={model.title} className="w-full h-32 object-cover mb-2 rounded-md" />
         <h3 className="font-semibold mb-2 text-[20px]">{model.title}</h3>
         <p className="text-[#797F8C] text-sm mb-2">{model.type}</p>
         <p className="text-[#797F8C] text-sm flex items-center mb-2">

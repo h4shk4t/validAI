@@ -32,7 +32,7 @@ const ContractAnalysis: React.FC<ContractAnalysisProps> = ({ code, onClose }) =>
     
     try {
       const encodedCode = encodeURIComponent(code);
-      const url = `https://wapo-testnet.phala.network/ipfs/QmVX6X7gVpUrKfy1xkEmmorcAy8mjfLh79N48vjfMHsc9x?sol=${encodedCode}&model=gpt-4`;
+      const url = `https://wapo-testnet.phala.network/ipfs/QmdBN78gaeRBvwRGo5T1g961vqSNBBwPLkTmzu8oudNHb4`;
       
       const response = await fetch(url);
       const data = await response.json();
