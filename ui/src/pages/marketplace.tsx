@@ -4,12 +4,15 @@ import Sidebar from '@/components/marketplace/sidebar';
 import Tab from '@/components/marketplace/tabs';
 import ModelCard from '@/components/marketplace/modelCard';
 import { Model } from '@/types/model';
+import { marketplaceService } from '@/lib/services/marketplace';
+import { ethers } from 'ethers';
 
 const Marketplace: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Most popular');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('');
   const [activeItem, setActiveItem] = useState('');
+  const [walletBalance, setWalletBalance] = useState<number>(10);
 
   const tabs = ['Most popular', 'Most downloaded', 'Most liked', 'Recently updated'];
 
@@ -166,6 +169,24 @@ const Marketplace: React.FC = () => {
     setActiveItem(item);
   };
 
+  const handlePurchase = async (modelId: string, price: number) => {
+    if (walletBalance < price) {
+      alert('Insufficient balance!');
+      return;
+    }
+
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []); // Request account access
+      await marketplaceService.buyToken(provider, modelId, price.toString());
+      setWalletBalance(walletBalance - price);
+      alert('Purchase successful!');
+    } catch (error) {
+      console.error('Purchase error:', error);
+      alert('Purchase failed!');
+    }
+  };
+
   return (
     <div className="flex h-screen bg-gray-900 text-white">
       <Sidebar
@@ -195,9 +216,21 @@ const Marketplace: React.FC = () => {
             <Search className="absolute right-3 top-2.5 text-gray-400" size={20} />
           </div>
         </div>
+        
+        {/* Wallet Button */}
+        <div className="mb-4">
+          <button className="bg-blue-600 px-4 py-2 rounded" disabled>
+            Wallet: {walletBalance} ValidCoins
+          </button>
+        </div>
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {sortedModels.map((model, index) => (
-            <ModelCard key={model.title + index} model={model} />
+            <ModelCard 
+              key={model.title + index} 
+              model={model} 
+              onPurchase={() => handlePurchase(index.toString(), model.price)} // Pass model price for purchase
+            />
           ))}
         </div>
       </div>

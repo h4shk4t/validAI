@@ -3,6 +3,8 @@ import { Download, Heart, Clock } from 'lucide-react';
 import { Model } from '@/types/model';
 import DescriptionModal from './descriptionModal';
 import { Dialog, DialogContent } from '../ui/dialog';
+import { ethers } from 'ethers';
+import { marketplaceService } from '@/lib/services/marketplace'
 
 interface ModelCardProps {
   model: Model;
@@ -29,6 +31,24 @@ const ModelCard: React.FC<ModelCardProps> = React.memo(({ model }) => {
     setIsModalOpen(true);
   };
 
+  const handleBuyClick = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      try {
+        await provider.send('eth_requestAccounts', []);
+        const modelId = model.title; // Use a unique ID for the model
+        const amount = ethers.utils.parseUnits(model.price.toString(), 18); // Adjust decimals as needed
+        await marketplaceService.buyToken(provider, modelId, amount.toString());
+        alert(`Successfully purchased ${model.title} for ${model.price} ValidCoin.`);
+      } catch (error) {
+        console.error(error);
+        alert('Purchase failed. Please try again.');
+      }
+    } else {
+      alert('Please install MetaMask or another Web3 provider.');
+    }
+  };
+
   return (
     <>
       <div className="p-4 rounded-lg cursor-pointer" onClick={handleCardClick}>
@@ -48,6 +68,12 @@ const ModelCard: React.FC<ModelCardProps> = React.memo(({ model }) => {
               {tag}
             </span>
           ))}
+        </div>
+        <div className="mt-2">
+          <span className="text-lg font-bold text-[#D38C14]">${model.price}</span>
+          <button onClick={handleBuyClick} className="ml-2 px-3 py-1 bg-[#77BAF4] text-white rounded-md">
+            Buy
+          </button>
         </div>
       </div>
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -70,7 +96,6 @@ const ModelCard: React.FC<ModelCardProps> = React.memo(({ model }) => {
       </Dialog>
     </>
   );
-
 });
 
 ModelCard.displayName = 'ModelCard';
