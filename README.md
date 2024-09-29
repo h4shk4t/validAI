@@ -1,5 +1,7 @@
 # ValidAI
 
+**Link to video:** https://vimeo.com/1014021314
+
 Introducing a decentralized AI platform powered by EigenLayer AVS and Othentic! Our platform empowers developers with AI agents for automated smart contract auditing and fosters an AI marketplace with subscription-based royalties, incentivizing ML researchers community.
 
 ## Current Problems in the AI Industry
