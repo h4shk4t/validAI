@@ -8,6 +8,7 @@ import Repos from "./pages/repos";
 import Dynamic from "./pages/dyanmic";
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
+import Rag from "./pages/rag";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/repos" element={<Repos />} />
           <Route path="/dynamic" element={<Dynamic />} />
           <Route path="/marketplace" element={<MarketplacePage />} />
+          <Route path="/rag" element={<Rag />} />
         </Routes>
       </Router>
     </DynamicContextProvider>
