@@ -9,6 +9,7 @@ import Dynamic from "./pages/dyanmic";
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 import Rag from "./pages/rag";
+import Apps from "./pages/apps";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/apps" element={<Apps />} />
           <Route path="/code" element={<CodePage />} />
           <Route path="/callback" element={<Callback />} />
           <Route path="/repos" element={<Repos />} />

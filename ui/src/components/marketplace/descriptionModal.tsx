@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiDownload, FiMessageSquare, FiStar, FiX } from 'react-icons/fi';
+import { FiDownload, FiMessageSquare, FiStar } from 'react-icons/fi';
 
 interface DescriptionModalProps {
   model: {

@@ -6,6 +6,7 @@ import ModelCard from "@/components/marketplace/modelCard";
 import { Model } from "@/types/model";
 import { marketplaceService } from "@/lib/services/marketplace";
 import { ethers } from "ethers";
+import NavBar from "@/components/navbar";
 
 const Marketplace: React.FC = () => {
   const [activeTab, setActiveTab] = useState("Most popular");
@@ -202,6 +203,8 @@ const Marketplace: React.FC = () => {
   };
 
   return (
+    <>
+    <NavBar />
     <div className="flex h-screen bg-gray-900 text-white">
       <Sidebar
         activeCategory={activeCategory}
@@ -252,6 +255,7 @@ const Marketplace: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
