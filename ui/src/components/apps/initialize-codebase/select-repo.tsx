@@ -6,7 +6,7 @@ import { useCodespaceStore } from "@/lib/stores/codespace-store";
 import { useNavbarStore } from "@/lib/stores/navbar-store";
 import useTokenStore from "@/lib/stores/token";
 import axios from "axios";
-import { ChevronLeft, ChevronsLeft, ChevronsRight, Lock } from "lucide-react";
+import { ChevronsLeft, ChevronsRight, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 

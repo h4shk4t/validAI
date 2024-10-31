@@ -19,7 +19,7 @@ export function AiBubble(props: { data: AiBubbleData }) {
   return (
     <div className="flex items-start gap-4 justify-start">
       <div className="bg-background text-foreground rounded-lg border-2 border-accent p-3 min-w-[30%] max-w-[70%]">
-        <div className="font-bold text-foreground tracking-tight">HealO</div>
+        <div className="font-bold text-foreground tracking-tight">Bot</div>
         <div className="text-xs flex flex-col gap-2 tracking-tight">
           {props.data.isLoading ? (
             <LoadingSkeleton />
