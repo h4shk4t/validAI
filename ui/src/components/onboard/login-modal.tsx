@@ -32,7 +32,7 @@ const LoginModal = () => {
           <Button
             onClick={() => {
               if (isDynamicLoggedIn && isGithubLoggedIn) {
-                navigate("/repos");
+                navigate("/marketplace");
               }
             }}
             className="mb-4 text-lg px-10 py-6 bg-[#0D152D] border-[#243A64] border hover:bg-[#112050]"

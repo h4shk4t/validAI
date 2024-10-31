@@ -2,12 +2,7 @@ import DevArea from "./dev-area";
 import StatusBar from "./status-bar";
 
 const CodeSpace = () => {
-  return (
-    <div className="w-full h-screen flex flex-col">
-      <DevArea />
-
-    </div>
-  );
+  return <DevArea />;
 };
 
 export default CodeSpace;

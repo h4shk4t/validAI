@@ -10,7 +10,7 @@ const DevArea = () => {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="w-full border-b"
+      className="w-full border-t"
     >
       <ResizablePanel defaultSize={20}>
         <SideBar />

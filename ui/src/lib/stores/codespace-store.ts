@@ -1,7 +1,10 @@
 import { TreeViewElement } from "@/components/ui/tree-view-api";
+import { Model } from "@/types/model";
 import { create } from "zustand";
 
 interface CodespaceStore {
+  hasOnboarded: boolean;
+  selectedModel: Model | null;
   currentFileContent: string | undefined;
   homeFolderPath: string;
   files: TreeViewElement[];
@@ -10,6 +13,8 @@ interface CodespaceStore {
   selectedFolderPath: string | null;
   filesChanged: boolean;
 
+  setHasOnboarded: (hasOnboarded: boolean) => void;
+  setSelectedModel: (selectedModel: Model | null) => void;
   setCurrentFileContent: (currentFileContent: string | undefined) => void;
   setFolderPath: (homeFolderPath: string) => void;
   setFiles: (files: TreeViewElement[]) => void;
@@ -21,14 +26,18 @@ interface CodespaceStore {
 }
 
 export const useCodespaceStore = create<CodespaceStore>((set) => ({
+  hasOnboarded: false,
+  selectedModel: null,
   currentFileContent: "",
-  homeFolderPath: "./repos/test",
+  homeFolderPath: "",
   files: [],
   openedFiles: [],
   selectedFile: null,
   selectedFolderPath: null,
   filesChanged: false,
 
+  setHasOnboarded: (hasOnboarded) => set({ hasOnboarded }),
+  setSelectedModel: (selectedModel) => set({ selectedModel }),
   setCurrentFileContent: (currentFileContent) => set({ currentFileContent }),
   setFolderPath: (homeFolderPath) => set({ homeFolderPath }),
   setFiles: (files) => set({ files }),

@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import requests
 from rag import search, add_docs_to_index
 from upload import upload
+from groq import Groq
 
 load_dotenv()
 
@@ -16,6 +17,9 @@ PORT = 8000
 id_counter = 0
 CORS(app, resources={r"*": {"origins": "*"}})
 
+ai_client = Groq(
+    api_key=os.environ["GROQ_API_KEY"],
+)
 
 def generate_tree(directory):
     global id_counter
@@ -183,7 +187,6 @@ def rag_request():
         print(f"Query: {query}")
         if not query:
             return jsonify({"error": "Missing query"}), 400
-
         contexts = search(query)
         print(f"Number of contexts: {len(contexts)}")
         files = set(context["file_path"] for context in contexts)
@@ -213,13 +216,18 @@ def rag_request():
         """
         hash = upload(prompt)
         print(f"Hash: {hash}")
-      
-        response = requests.post(f"{os.environ["AVS_ENDPOINT"]}/rag", json={"file_id": hash, "model_name": model_name})
-        print(response.json())
-        answer = response.json()["response"]
+        
+        print("here I am")
+        response = ai_client.chat.completions.create(
+            model="llama3-70b-8192",
+            messages=[
+                {"role": "user", "content": prompt},
+            ]
+        )
+        print(response)
+        answer = response.choices[0].message.content
         return jsonify({"answer":answer, "file_contents": file_contents}), 200
                 
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

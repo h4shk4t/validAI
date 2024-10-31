@@ -33,23 +33,22 @@ const Sidebar: React.FC<SidebarProps> = ({ activeCategory, activeItem, onSelectC
   ];
 
   return (
-    <div className="w-64 bg-gray-800 text-white p-4 shadow-lg">
-      <img src="/lookout.png" alt="EM EL MARKETPLACE" className="mb-4 w-full max-w-[160px] mx-auto" />
-      <hr className="border-t border-gray-600 mb-7" />
+    <div className="w-64 bg-background text-foreground p-4 shadow-lg border-r">
+      <div className=" mb-7" />
       {categories.map((category) => (
         <div key={category.title} className="mb-6">
-          <h3 className="font-semibold mb-3 text-gray-400 flex items-center">
+          <h3 className="font-semibold mb-3 text-white flex items-center">
             <category.icon className="mr-2 stroke-current" size={18} />
             {category.title}
           </h3>
-          <ul>
+          <ul className='space-y-1'>
             {category.items.map((item) => (
               <li
                 key={item}
                 className={`cursor-pointer py-2 px-3 rounded transition-colors duration-200 ${
                   activeCategory === category.title && activeItem === item
-                    ? 'bg-blue-600 text-white'
-                    : 'hover:bg-gray-700'
+                    ? 'bg-accent text-white'
+                    : 'hover:bg-accent/50'
                 }`}
                 onClick={() => onSelectCategory(category.title, item)}
               >
