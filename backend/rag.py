@@ -17,9 +17,7 @@ from llama_index.vector_stores.faiss import FaissVectorStore
 
 load_dotenv()
 
-
 index_store = os.environ["INDEX_STORE"]
-
 
 Settings.embed_model = OpenAIEmbedding(
     api_base="https://api.red-pill.ai/v1",

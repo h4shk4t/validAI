@@ -42,9 +42,9 @@ export function AiBubble(props: { data: AiBubbleData }) {
 
 function LoadingSkeleton() {
   return (
-    <div className="space-y-2">
-      <Skeleton className="h-4 " />
-      <Skeleton className="h-4" />
+    <div className="space-y-2 animate-pulse inline-flex items-end gap-1 pb-1">
+        <div className="w-4 h-4 bg-primary rounded-full" />
+        <span className="text-muted-foreground font-semibold"> Thinking...</span>
     </div>
   );
 }
