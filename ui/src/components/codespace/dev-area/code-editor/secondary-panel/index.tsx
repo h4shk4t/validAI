@@ -3,7 +3,6 @@ import { Bot, Bug, Flower, TerminalIcon } from "lucide-react";
 import { useState } from "react";
 import Terminal from "./features/terminal";
 import Audit from "./features/audit";
-import Chat from "./features/chat";
 import { Button } from "@/components/ui/button";
 import AIAgentFlowDiagram from "./features/agent-flow-diagram";
 
@@ -14,11 +13,6 @@ const SecondaryPanel = () => {
       label: "Terminal",
       icon: <TerminalIcon className={iconClass} />,
       component: <Terminal />,
-    },
-    {
-      label: "Chat",
-      icon: <Bot className={iconClass} />,
-      component: <Chat />,
     },
     {
       label: "Audit",

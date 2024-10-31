@@ -16,17 +16,17 @@ export function AiInput() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="w-full flex flex-row pb-4 gap-2 px-2">
           <Input
-            className="rounded-full text-xs bg-background/30 backdrop-blur-md"
-            placeholder="Ask Something.."
+            className="rounded-full text-sm tracking-tight bg-background/30 backdrop-blur-md"
+            placeholder="Ask Something..."
             id="compose"
           />
           <Button
             type="submit"
             size={"icon"}
             variant={"gooeyRight"}
-            className="absolute float-end rounded-full mr-1"
+            className="rounded-full"
           >
             <Send className="w-4 h-4" />
           </Button>

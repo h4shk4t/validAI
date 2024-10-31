@@ -33,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeCategory, activeItem, onSelectC
   ];
 
   return (
-    <div className="w-56 bg-background text-foreground p-4 shadow-lg">
+    <div className="w-64 bg-background text-foreground p-4 shadow-lg border-r">
       <div className=" mb-7" />
       {categories.map((category) => (
         <div key={category.title} className="mb-6">

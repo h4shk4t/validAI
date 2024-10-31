@@ -7,7 +7,6 @@ import { Lock } from "lucide-react";
 import { cloneRepo } from "@/lib/api";
 import { useCodespaceStore } from "@/lib/stores/codespace-store";
 import { useNavigate } from "react-router-dom";
-import Dynamic from "./dyanmic";
 import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 
 const Repos = () => {
