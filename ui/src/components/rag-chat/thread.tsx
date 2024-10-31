@@ -25,7 +25,6 @@ export function Thread() {
     fetchResponse();
   }, [userInput]);
 
-  // Scroll to the bottom of the thread when a new message is added
   useEffect(() => {
     if (threadRef.current) {
       threadRef.current.addEventListener("DOMNodeInserted", (e) => {

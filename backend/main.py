@@ -187,7 +187,6 @@ def rag_request():
         print(f"Query: {query}")
         if not query:
             return jsonify({"error": "Missing query"}), 400
-
         contexts = search(query)
         print(f"Number of contexts: {len(contexts)}")
         files = set(context["file_path"] for context in contexts)

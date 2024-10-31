@@ -66,7 +66,7 @@ const SelectRepo = (props: SelectRepoProps) => {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold tracking-tighter my-2">
+      <h1 className="text-2xl font-semibold tracking-tighter my-2 text-white">
         Get started with your Repository
       </h1>
       <Input

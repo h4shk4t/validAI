@@ -109,7 +109,7 @@ const SelectModel = (props: SelectModelProps) => {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold tracking-tighter my-2">
+      <h1 className="text-2xl font-semibold tracking-tighter my-2 text-white">
         Select your Subscribed Model
       </h1>
       <Input

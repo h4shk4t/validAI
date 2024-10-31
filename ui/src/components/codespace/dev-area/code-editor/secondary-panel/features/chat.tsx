@@ -41,51 +41,48 @@ const Chat = () => {
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
     }
   }, [output]);
 
   return (
-
-  //   <div className="flex flex-col h-full">
-  //     <div className="flex-grow overflow-hidden flex" ref={chatContainerRef}>
-        <div className="grid grid-cols-4 gap-4 h-full w-full">
-          <div className="col-span-3 overflow-y-auto border-r h-full">
-            <Markdown className="text-sm font-mono p-2 whitespace-pre-wrap">
-              {output}
-            </Markdown>
+    <div className="grid grid-cols-4 gap-4 h-full w-full">
+      <div className="col-span-3 overflow-y-auto border-r h-full">
+        <Markdown className="text-sm font-mono p-2 whitespace-pre-wrap">
+          {output}
+        </Markdown>
+      </div>
+      <div className="col-span-1 overflow-y-auto h-full">
+        <div className="bg-card p-2">
+          <p className="font-medium text-muted-foreground tracking-tight">
+            References
+          </p>
+          <div className="flex flex-col gap-1 pb-8 pt-2">
+            {Object.keys(referenceFiles).map((fileName, index) => (
+              <Dialog key={index}>
+                <DialogTrigger asChild>
+                  <div className="text-sm tracking-tight bg-background border hover:bg-secondary-foreground hover:cursor-pointer px-2 py-1 inline-flex items-center">
+                    <File className="w-4 mr-2" />
+                    {fileName}
+                  </div>
+                </DialogTrigger>
+                <DialogContent className="min-w-[40rem]">
+                  <DialogHeader>
+                    <DialogTitle>{fileName}</DialogTitle>
+                  </DialogHeader>
+                  <div className="h-[36rem] overflow-y-auto">
+                    <Markdown className="whitespace-pre-wrap text-sm bg-white/5 rounded-md p-2">
+                      {referenceFiles[fileName]}
+                    </Markdown>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            ))}
           </div>
-          <div className="col-span-1 overflow-y-auto h-full">
-            <div className="bg-card p-2">
-              <p className="font-medium text-muted-foreground tracking-tight">
-                References
-              </p>
-              <div className="flex flex-col gap-1 pb-8 pt-2">
-                {Object.keys(referenceFiles).map((fileName, index) => (
-                  <Dialog key={index}>
-                    <DialogTrigger asChild>
-                      <div className="text-sm tracking-tight bg-background border hover:bg-secondary-foreground hover:cursor-pointer px-2 py-1 inline-flex items-center">
-                        <File className="w-4 mr-2" />
-                        {fileName}
-                      </div>
-                    </DialogTrigger>
-                    <DialogContent className="min-w-[40rem]">
-                      <DialogHeader>
-                        <DialogTitle>{fileName}</DialogTitle>
-                      </DialogHeader>
-                      <div className="h-[36rem] overflow-y-auto">
-                        <Markdown className="whitespace-pre-wrap text-sm bg-white/5 rounded-md p-2">
-                          {referenceFiles[fileName]}
-
-                        </Markdown>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                ))}
-              </div>
-            </div>
-          </div>
-        {/* </div>
+        </div>
+      </div>
+      {/* </div>
       </div> */}
 
       <div

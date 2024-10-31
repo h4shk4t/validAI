@@ -16,9 +16,9 @@ export function AiInput() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full flex flex-row pb-4 gap-2 px-2">
+      <form onSubmit={handleSubmit} className="w-full flex flex-row pb-4 gap-2 px-2 !bg-transparent">
           <Input
-            className="rounded-full text-sm tracking-tight bg-background/30 backdrop-blur-md"
+            className="rounded-full text-sm tracking-tight bg-background/10 backdrop-blur-sm"
             placeholder="Ask Something..."
             id="compose"
           />
