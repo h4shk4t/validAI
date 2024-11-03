@@ -2,7 +2,7 @@
 
 **Link to video:** https://vimeo.com/1014021314
 
-Introducing a decentralized AI platform powered by EigenLayer AVS and Othentic! Our platform empowers developers with AI agents for automated smart contract auditing and fosters an AI marketplace with subscription-based royalties, incentivizing ML researchers community.
+Introducing a decentralized AI platform powered by EigenLayer AVS and Othentic! Our platform empowers developers with AI agents for automated smart contract auditing (and more!) and fosters an AI marketplace with subscription-based royalties, incentivizing ML researchers community.
 
 ## Current Problems in the AI Industry
 1. **Centralization**: AI models are trained on centralized servers, leading to data privacy concerns and a lack of transparency.
@@ -12,7 +12,7 @@ Introducing a decentralized AI platform powered by EigenLayer AVS and Othentic! 
 
 ## Description
 
-Our platform leverages a decentralized AI infrastructure built on EigenLayer's restaking mechanism, which taps into Ethereum's security to ensure robust operation for our AI agents. By utilizing Phala Network’s Red Pill contract template, we efficiently deploy AI agents capable of tasks like smart contract auditing and AI-powered code assistance. Developers benefit from automatic smart contract audits and instant, contextually relevant support through a pretrained chatbot and a Retrieval Augmented Generation (RAG) system. Our AI marketplace fosters innovation by providing access to pre-trained models, using a subscription-based royalty system to reward AI/ML researchers. The platform is built on Near Protocol, utilizing its yield resume architecture for high-performance, asynchronous contracts in Rust. This combination of technologies enables secure, scalable, and democratized access to AI.
+Our platform leverages a decentralized AI infrastructure built on EigenLayer's restaking mechanism, which taps into Ethereum's security to ensure robust operation for our AI agents. We efficiently deploy AI agents capable of tasks like smart contract auditing and AI-powered code assistance (there can be multiple agents doing varying tasks as well). Developers benefit from automatic smart contract audits and instant, contextually relevant support through a pretrained chatbot and a Retrieval Augmented Generation (RAG) system. Our AI marketplace fosters innovation by providing access to pre-trained models, using a subscription-based royalty system to reward AI/ML researchers. The platform is built on Near Protocol, utilizing its yield resume architecture for high-performance, asynchronous contracts in Rust. This combination of technologies enables secure, scalable, and democratized access to AI.
 
 ## Architecture
 ### Decentralized Marketplace on NEAR Blockchain
@@ -27,7 +27,7 @@ This project builds a decentralized marketplace powered by NEAR Protocol and Val
 ### AI-Powered Platform
 ![](image.png)
 
-This platform integrates decentralized AI services built on EigenLayer's restaking and Phala’s Red Pill contract templates. AI agents deployed within the NEAR ecosystem perform complex tasks such as smart contract audits and code assistance.
+This platform integrates decentralized AI services built on EigenLayer's restaking. AI agents deployed within the NEAR ecosystem perform complex tasks such as smart contract audits and code assistance.
 AI Marketplace Features:
 
 **AI Audits & Code Assistance**: Trained AI agents audit smart contracts and provide on-the-go assistance through an AI-powered chatbot and a Retrieval Augmented Generation (RAG) system.
